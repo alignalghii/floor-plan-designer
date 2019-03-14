@@ -4,10 +4,15 @@
 		<meta charset="UTF-8"/>
 		<script src="collisionTest.js"></script>
 		<script src="collision.js"></script>
-		<title>JavaScript test runner</title>
+		<title>JavaScript shape editor</title>
 	</head>
 	<body>
-		<h1>JavaScript test runner</h1>
+		<h1>JavaScript shape editor</h1>
+		<h2>Config: collision detection grade</h2>
+		<input type="radio" name="collision-detection-grade" checked/> Quick but superficial
+		<input type="radio" name="collision-detection-grade"/> Slow but complete
+		<h2>Test runner: result</h2>
 		<div id="result"></div>
+		<canvas id="screen" width="1000" height="1000"></canvas>
 	</body>
 </html>
