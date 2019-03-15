@@ -1,0 +1,14 @@
+ul.horizontal {
+	list-style-type: none;
+	overflow: hidden;
+}
+
+ul.horizontal li {
+	float: left;
+}
+
+ul.horizontal li span {
+	display: block;
+	text-align: center;
+	padding: 16px;
+}

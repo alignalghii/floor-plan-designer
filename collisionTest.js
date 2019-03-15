@@ -5,8 +5,63 @@ function main(event)
 	var status = testOr() && testAnd() && testSum() && testSame() && testDet() && testScalarProduct() && testVectorLength() && testAngleOfVectors()  && testSignedRotAngleOfVectors() && testAreConvexVectors() && testAreConcaveVectors() && testEdgeVector() && testAreConvexDirectedEdges() && testAreConcaveDirectedEdges() && testLineSide() && testSectionSide() && testIsPrefixOf() && testVecEq() && testAngleOfEdges() && testTour() && testStatistics() && testAngleMod() && testIsConvex() && testAreConvex() && testRoll() && testRollToJoin() && testSubsequencer() && testSubsequencerRolled() && testDepth() && testExecuteTree() && testFoldl() && testUncurry() && testAngleTyper() && testAngleSumWhenToured() && testSignedRotAngleSumWhenToured() && testAngleTyper_dependent() && testAsciiGraphics() && testInside_convex_ccw() && testInside_convex_cw() && testInside_concave_ccw() && testInside_concave_cw() && testInside_series_convex_ccw() && testInside_series_convex_cw() && testInside_series_degen_ccw() && testInside_series_degen_cw() && testInside_series_concave_ccw() && testInside_series_concave_cw();
 	var target = document.getElementById('result');
 	target.innerHTML = status ? 'OK' : 'Wrong';
-	testGraphics();
+
+	document.addEventListener('click', extendedTests);
 }
+
+function extendedTests(event)
+{
+	deleteElementsWithTagName('canvas');
+	deleteElementsWithTagName('svg');
+	var graphicsHeader = document.getElementById('graphics_header');
+	switch (event.target.id) {
+		case 'canvas_button':
+			graphicsHeader.innerHTML = 'Canvas graphics';
+			var canvas = createGraphics('canvas', 'screen', 1000, 1000);
+			insertAfter(canvas, graphicsHeader);
+			setTimeout(testGraphics);
+			break;
+		case 'svg_button':
+			graphicsHeader.innerHTML = 'SVG graphics';
+			break;
+	}
+}
+
+function deleteElementsWithTagName(name)
+{
+	var elementCollection = document.getElementsByTagName(name);
+	for (var i = 0; i < elementCollection.length; i++) {
+		deleteElement(elementCollection.item(i));
+	}
+}
+
+function deleteElement(element) {element.parentNode.removeChild(element);}
+
+function createGraphics(tagName, id, width, height)
+{
+	var element = document.createElement(tagName);
+	element.id  = id;
+	element.setAttribute('width' , width );
+	element.setAttribute('height', height);
+	return element;
+}
+
+function insertAfter(what, afterWhat)
+{
+	afterWhat.parentNode.insertBefore(what, afterWhat.nextSibling);
+}
+
+function testGraphics()
+{
+	var canvas = document.getElementById('screen');
+	var ctx = canvas.getContext('2d');
+	graphics(ctx,  0,  0, 8,  8, poly1_convex_ccw , 50,   0, 400, "rgb(200,   0, 0)");
+	graphics(ctx, -4, -3, 8, 10, poly1_concave_ccw, 50, 500, 500, "rgb(160,  40, 0)");
+	graphics(ctx, -3, -3, 3,  2, poly2_convex_ccw , 50, 100, 700, "rgb(  0, 200, 0)");
+	graphics(ctx, -3, -3, 3,  2, poly2_degen_ccw  , 50, 350, 700, "rgb(  0, 160,40)");
+	graphics(ctx, -3, -3, 3,  2, poly2_concave_ccw, 50, 600, 700, "rgb(  0, 120,80)");
+}
+
 
 const poly1_convex_ccw = [[2, 1], [6, 2], [7, 5], [5, 7], [1, 6]];
 const poly1_convex_cw  = [[2, 1], [1, 6], [5, 7], [7, 5], [6, 2]];
@@ -21,16 +76,6 @@ const poly2_degen_cw    = [[ 0, -1], [-2, -1], [ 0,  1], [ 2, -1]];
 const poly2_concave_ccw = [[ 0,  0], [ 2, -1], [ 0,  1], [-2, -1]];
 const poly2_concave_cw  = [[ 0,  0], [-2, -1], [ 0,  1], [ 2, -1]];
 
-function testGraphics()
-{
-	var canvas = document.getElementById('screen');
-	var ctx = canvas.getContext('2d');
-	graphics(ctx,  0,  0, 8,  8, poly1_convex_ccw , 50,   0, 400, "rgb(200,   0, 0)");
-	graphics(ctx, -4, -3, 8, 10, poly1_concave_ccw, 50, 500, 500, "rgb(160,  40, 0)");
-	graphics(ctx, -3, -3, 3,  2, poly2_convex_ccw , 50, 100, 700, "rgb(  0, 200, 0)");
-	graphics(ctx, -3, -3, 3,  2, poly2_degen_ccw  , 50, 350, 700, "rgb(  0, 160,40)");
-	graphics(ctx, -3, -3, 3,  2, poly2_concave_ccw, 50, 600, 700, "rgb(  0, 120,80)");
-}
 
 
 function testAsciiGraphics()

@@ -2,17 +2,22 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="navigation.css"/>
 		<script src="collisionTest.js"></script>
 		<script src="collision.js"></script>
 		<title>JavaScript shape editor</title>
 	</head>
 	<body>
 		<h1>JavaScript shape editor</h1>
+		<ul class="horizontal">
+			<li><span id="canvas_button">Canvas graphics</span></li>
+			<li><span id="svg_button">SVG graphics</span></li>
+		</ul>
 		<h2>Config: collision detection grade</h2>
 		<input type="radio" name="collision-detection-grade" checked/> Quick but superficial
 		<input type="radio" name="collision-detection-grade"/> Slow but complete
 		<h2>Test runner: result</h2>
 		<div id="result"></div>
-		<canvas id="screen" width="1000" height="1000"></canvas>
+		<h2 id="graphics_header">Graphics</h2>
 	</body>
 </html>
