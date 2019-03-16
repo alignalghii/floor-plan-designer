@@ -1,11 +1,16 @@
-onload = main;
+window.onload = main;
+
+var graphicsHeader;
 
 function main(event)
 {
+	/** Unit tests*/
 	var status = testOr() && testAnd() && testSum() && testSame() && testDet() && testScalarProduct() && testVectorLength() && testAngleOfVectors()  && testSignedRotAngleOfVectors() && testAreConvexVectors() && testAreConcaveVectors() && testEdgeVector() && testAreConvexDirectedEdges() && testAreConcaveDirectedEdges() && testLineSide() && testSectionSide() && testIsPrefixOf() && testVecEq() && testAngleOfEdges() && testTour() && testStatistics() && testAngleMod() && testIsConvex() && testAreConvex() && testRoll() && testRollToJoin() && testSubsequencer() && testSubsequencerRolled() && testDepth() && testExecuteTree() && testFoldl() && testUncurry() && testAngleTyper() && testAngleSumWhenToured() && testSignedRotAngleSumWhenToured() && testAngleTyper_dependent() && testAsciiGraphics() && testInside_convex_ccw() && testInside_convex_cw() && testInside_concave_ccw() && testInside_concave_cw() && testInside_series_convex_ccw() && testInside_series_convex_cw() && testInside_series_degen_ccw() && testInside_series_degen_cw() && testInside_series_concave_ccw() && testInside_series_concave_cw();
 	var target = document.getElementById('result');
 	target.innerHTML = status ? 'OK' : 'Wrong';
 
+	/* Dynamic graphics areas */
+	graphicsHeader = document.getElementById('graphics_header');
 	document.addEventListener('click', extendedTests);
 }
 
@@ -16,7 +21,6 @@ const xlink = 'http://www.w3.org/1999/xlink';
 function extendedTests(event)
 {
 	deleteElementsWithTagNames(['canvas', 'svg']);
-	var graphicsHeader = document.getElementById('graphics_header');
 	graphicsHeader.innerHTML = 'Graphics';
 	switch (event.target.id) {
 		case 'canvas_button':
@@ -31,6 +35,7 @@ function extendedTests(event)
 			//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
 			//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
 			break;
+		default:
 	}
 }
 
