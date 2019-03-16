@@ -40,22 +40,7 @@ function inside(point, figure)
 		var flag_rhs = angleTyper(expr_rhs, pointIsRightOfEdge, true, bAnd, bOr);
 		return flag_rhs;
 	}
-
-	console.log(point);
-
-	console.log(edges);
-	console.log(expr_lhs);
-	console.log(expr_rhs);
-	console.log('***************');
-	/*var flag_leftHand = flag_rightHand = true;
-	tour(figure).forEach(function ([point1, point2]) {flag_leftHand  = flag_leftHand  && sectionSide(point1, point2, point) >= 0;});
-	tour(figure).forEach(function ([point1, point2]) {flag_rightHand = flag_rightHand && sectionSide(point1, point2, point) <= 0;});*/
-	console.log(flag_lhs);
-	console.log(flag_rhs);
-	var flag = flag_lhs && !flag_rhs;
-	console.log(flag);
-	console.log('================');
-	return flag;
+	// @TODO var flag = flag_lhs && !flag_rhs;
 }
 
 function signedRotAngleSumWhenToured(figure)
@@ -154,37 +139,8 @@ function subsequencer(xs, f)
 			expr.push({val:x});
 		}
 	}
-	//console.log(expr);
-	//console.log('*************************');
 	return expr;
-	/*
-	if (xs.length == 0) return [];
-	var prev = xs[0];
-	var expr = [], subexpr = [];
-	var nofallearlier = true;
-	for (var i = 1; i < xs.length; i++) {
-		var x = xs[i];
-		if (f(prev, x)) {
-			expr.push(prev);
-		} else {
-			subexpr.push(prev);
-			if (nofallearlier) subexpr.push(x);
-			nofallearlier = false;
-		}
-		prev = x;
-	}
-	expr.push(prev);
-	return expr;
-	*/
-	/*if (vecEq(xs, [10, 20, 30, 28, 34, 30, 23, 12, 55])) {
-		return [10, 20, [30, 28], [34, 30, 23, 12], 55];
-	} else if (vecEq(xs, [])) {
-		return [];
-	} else if (vecEq(xs, [])) {
-		return [];
-	} else {
-		return [];
-	}*/
+	// @TODO optimize time with memory variables that store previous states throughout loop cycles
 }
 
 function rollToJoin(xs, f)
