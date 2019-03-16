@@ -1,6 +1,7 @@
 window.onload = main;
 
 var graphicsHeader;
+var svg = svgPoint = circle = null;
 
 function main(event)
 {
@@ -20,24 +21,39 @@ const xlink = 'http://www.w3.org/1999/xlink';
 
 function extendedTests(event)
 {
-	deleteElementsWithTagNames(['canvas', 'svg']);
-	graphicsHeader.innerHTML = 'Graphics';
 	switch (event.target.id) {
 		case 'canvas_button':
+			destroyGraphics();
 			graphicsHeader.innerHTML = 'Canvas graphics';
 			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
 			setTimeout(testGraphics);
 			break;
 		case 'svg_button':
+			destroyGraphics();
 			graphicsHeader.innerHTML = 'SVG graphics';
-			var svg    = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);
-			var circle = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS);
+			svg    = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);
+			circle = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS);
+			svgPoint = svg.createSVGPoint();
 			//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
 			//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
 			break;
-		default:
+		case 'screen':
+			if (svg && svgPoint && circle) { // svg <-> svgPoint <-> circle
+				svgPoint.x = event.clientX;
+				svgPoint.y = event.clientY;
+				var showPoint = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+				circle.setAttribute('cx', showPoint.x);
+				circle.setAttribute('cy', showPoint.y);
+			}
 	}
 }
+
+function destroyGraphics()
+{
+	deleteElementsWithTagNames(['canvas', 'svg']);
+	svg = svgPoint = circle = null;
+}
+
 
 function deleteElementsWithTagNames(names) {names.forEach(deleteElementsWithTagName);}
 function deleteElementsWithTagName(name)
