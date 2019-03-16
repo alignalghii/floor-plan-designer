@@ -9,24 +9,32 @@ function main(event)
 	document.addEventListener('click', extendedTests);
 }
 
+const svgNS = 'http://www.w3.org/2000/svg';
+const xmlns = 'http://www.w3.org/2000/xmlns/';
+const xlink = 'http://www.w3.org/1999/xlink';
+
 function extendedTests(event)
 {
-	deleteElementsWithTagName('canvas');
-	deleteElementsWithTagName('svg');
+	deleteElementsWithTagNames(['canvas', 'svg']);
 	var graphicsHeader = document.getElementById('graphics_header');
+	graphicsHeader.innerHTML = 'Graphics';
 	switch (event.target.id) {
 		case 'canvas_button':
 			graphicsHeader.innerHTML = 'Canvas graphics';
-			var canvas = createGraphics('canvas', 'screen', 1000, 1000);
-			insertAfter(canvas, graphicsHeader);
+			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
 			setTimeout(testGraphics);
 			break;
 		case 'svg_button':
 			graphicsHeader.innerHTML = 'SVG graphics';
+			var svg    = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);
+			var circle = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS);
+			//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
+			//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
 			break;
 	}
 }
 
+function deleteElementsWithTagNames(names) {names.forEach(deleteElementsWithTagName);}
 function deleteElementsWithTagName(name)
 {
 	var elementCollection = document.getElementsByTagName(name);
@@ -37,19 +45,29 @@ function deleteElementsWithTagName(name)
 
 function deleteElement(element) {element.parentNode.removeChild(element);}
 
-function createGraphics(tagName, id, width, height)
+function createElementWithAttributes(tagName, attrs, namespaceURI = null)
 {
-	var element = document.createElement(tagName);
-	element.id  = id;
-	element.setAttribute('width' , width );
-	element.setAttribute('height', height);
+	var element = namespaceURI ? document.createElementNS(namespaceURI, tagName)
+	                           : document.createElement  (              tagName);
+	for (var attrName in attrs) element.setAttribute(attrName, attrs[attrName]);
 	return element;
 }
 
-function insertAfter(what, afterWhat)
+function createAndAppendChildWithAttrs(parent, tagName, attrs, namespaceURI = null)
 {
-	afterWhat.parentNode.insertBefore(what, afterWhat.nextSibling);
+	var childElement = createElementWithAttributes(tagName, attrs, namespaceURI);
+	parent.appendChild(childElement);
+	return childElement;
 }
+
+
+function createGraphics(tagName, id, width, height, namespaceURI = null)
+{
+	var attrs = {id:id, width:width, height:height};
+	return createElementWithAttributes(tagName, attrs, namespaceURI);
+}
+
+function insertAfter(what, afterWhat) {afterWhat.parentNode.insertBefore(what, afterWhat.nextSibling);}
 
 function testGraphics()
 {
