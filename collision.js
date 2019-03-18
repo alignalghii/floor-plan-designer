@@ -74,7 +74,7 @@ function executeTree(op_extern, const_extern, op_intern, const_intern, op_splice
 	for (var i = 0; i < exprTree.length; i++) {
 		var item = exprTree[i];
 		if ('sub' in item) {
-			subresult = foldl(op_intern, const_intern, item.sub);
+			subresult = item.sub.reduce(op_intern, const_intern); // foldl(op_intern, const_intern, item.sub);
 			result = op_splice(result, subresult);
 		} else {
 			result = op_extern(result, item.val);
@@ -85,7 +85,7 @@ function executeTree(op_extern, const_extern, op_intern, const_intern, op_splice
 
 function uncurry(f) {return function ([a, b]) {return f(a, b);};}
 
-function foldl(op, cnst, lst)
+function foldl(op, cnst, lst) // @TODO same as `Array.prototype.reduce`?
 {
 	var result = cnst;
 	lst.forEach(function (item) {result = op(result, item);});
@@ -277,7 +277,7 @@ function same(stats)
 	return lAnd(stats) || !lOr(stats);
 }
 
-function sum(xs) {return foldl(bPlus, 0, xs);}
+function sum(xs) {return xs.reduce(bPlus, 0);} // `foldl(bPlus, 0, xs)`
 
 function lAnd(stats)
 {
