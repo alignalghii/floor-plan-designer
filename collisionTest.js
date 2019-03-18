@@ -1,7 +1,7 @@
 window.onload = main;
 
 var graphicsHeader;
-var svg = svgPoint = circle = null;
+var svg = svgPoint = circle = null; // set/unset always simultaneosly
 
 function main(event)
 {
@@ -31,9 +31,9 @@ function extendedTests(event)
 		case 'svg_button':
 			destroyGraphics();
 			graphicsHeader.innerHTML = 'SVG graphics';
-			svg    = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);
-			circle = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS);
-			svgPoint = svg.createSVGPoint();
+			svg    = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS); // set/unset always simultaneosly
+			circle = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
+			svgPoint = svg.createSVGPoint();                                                                             // set/unset always simultaneosly
 			//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
 			//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
 			break;
@@ -51,7 +51,7 @@ function extendedTests(event)
 function destroyGraphics()
 {
 	deleteElementsWithTagNames(['canvas', 'svg']);
-	svg = svgPoint = circle = null;
+	svg = svgPoint = circle = null; // set/unset always simultaneosly
 }
 
 
