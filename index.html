@@ -6,6 +6,8 @@
 		<link rel="stylesheet" href="graphics.css"/>
 		<script src="collisionTest.js"></script>
 		<script src="collision.js"></script>
+		<script src="drawTest.js"></script>
+		<script src="draw.js"></script>
 		<title>JavaScript shape editor</title>
 	</head>
 	<body>
@@ -14,11 +16,19 @@
 			<li><span id="canvas_button">Canvas graphics</span></li>
 			<li><span id="svg_button">SVG graphics</span></li>
 		</ul>
+
 		<h2>Config: collision detection grade</h2>
 		<input type="radio" name="collision-detection-grade" checked/> Quick but superficial
 		<input type="radio" name="collision-detection-grade"/> Slow but complete
-		<h2>Test runner: result</h2>
-		<div id="result"></div>
+
+		<h2>Test runner: module results</h2>
+		<ul>
+			<table>
+			<tr><td>Math module test:</td> <td id="result_math"></td></tr>
+			<tr><td>Draw module test:</td> <td id="result_draw"></td></tr>
+			</table>
+		</ul>
+
 		<h2 id="graphics_header">Graphics</h2>
 	</body>
 </html>
