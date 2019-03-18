@@ -14,7 +14,11 @@ function main(event)
 		// Coordinate systems transition
 		testDomainToSvgFactory() && testSvgToDomainFactory() &&
 		// Drawing
-		testStringifyPositionWithComma() && testDrawFigureAux();
+		testStringifyPositionWithComma() && testDrawFigureAux() &&
+		// Board query
+		testSelectByMax() && testSelectByProp() &&
+		// Board algebra
+		testFigureId() && testFigureNum() && testAddFigure() && testDeleteFigure() && testUpdateFigure();
 
 	var target_draw = document.getElementById('result_draw');
 	target_draw.innerHTML = status_draw ? 'OK' : 'Wrong';
