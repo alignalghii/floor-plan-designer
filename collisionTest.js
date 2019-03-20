@@ -54,8 +54,8 @@ function extendedTests(event)
 			svgPoint    = svg.createSVGPoint();                                                                                 // set/unset always simultaneosly
 			//circle      = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
 			board       = emptyBoard;                                                                                           // set/unset always simultaneosly
-			standingFig = {grasp: [0, 0], vertices: [[ 2,  3], [ 6,  3], [ 5,  5]          ], fill: 'red' } ;                   // set/unset always simultaneosly
-			movingFig   = {grasp: [0, 0], vertices: [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], fill: 'blue'};                    // set/unset always simultaneosly
+			standingFig = new Figure([0, 0], [[ 2,  3], [ 6,  3], [ 5,  5]          ], {fill: 'red' });                         // set/unset always simultaneosly
+			movingFig   = new Figure([0, 0], [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], {fill: 'blue'});                         // set/unset always simultaneosly
 			/*@TODO procedural*/ id_standing = board.addFigure(standingFig);
 			/*@TODO procedural*/ id_moving   = board.addFigure(movingFig  );
 			redrawFigure(id_standing, board, domainToSvg_600_400_10, svg);
@@ -70,7 +70,7 @@ function extendedTests(event)
 				var showPoint        = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
 				var clickDomainPoint = svgToDomain_600_400_10([showPoint.x, showPoint.y]);
 				var displacement     = fromTo(movingFig.grasp, clickDomainPoint);
-				/*@TODO procedural*/doTranslation(displacement, movingFig);
+				/*@TODO procedural*/movingFig.doTranslation(displacement);
 				/*@TODO procedural*/board.updateFigure(id_moving, movingFig);
 				redrawFigure(id_moving, board, domainToSvg_600_400_10, svg);
 				//circle.setAttribute('cx', showPoint.x);
