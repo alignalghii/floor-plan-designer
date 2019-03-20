@@ -279,6 +279,18 @@ function same(stats)
 
 function sum(xs) {return xs.reduce(bPlus, 0);} // `foldl(bPlus, 0, xs)`
 
+function pointwise(f)
+{
+	function pf(xs, ys)
+	{
+		var res = [];
+		function pushSum(val, key) {res.push(val + ys[key]);}
+		xs.forEach(pushSum);
+		return res;
+	}
+	return pf;
+}
+
 function lAnd(stats)
 {
 	var status = true;

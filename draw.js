@@ -1,3 +1,37 @@
+/**************************
+ * Geometric transformations (translation, reflection, rotation)
+ **************************/
+
+function translation([dx, dy], figureIn)
+{
+	function displace([x,y]) {return [x+dx, y+dy];}  // @TODO curry(pointwise(bPlus))(displacement)
+
+	var figureOut = {}, value;
+	for (var key in figureIn) {
+		switch (key) {
+			case 'grasp':
+				var [x0, y0] = figureIn.grasp;
+				value = [x0+dx, y0+dy];
+				break;
+			case 'vertices':
+				value = figureIn.vertices.map(displace);
+				break;
+			default:
+				value = figureIn[key];
+		}
+		figureOut[key] = value;
+	}
+	return figureOut;
+}
+
+function doTranslation([dx, dy], figure)
+{
+	function displace(point) {point[0] = point[0]+dx; point[1] = point[1] + dy;}
+	figure.vertices.forEach(displace);
+	figure.grasp[0] += dx;
+	figure.grasp[1] += dy;
+}
+
 /*******************************
  * Query the Board: Abstract modeling of events, and enabling acting both on abstract representation with concrete SVG level
  *******************************/
@@ -37,26 +71,23 @@ function selectByMax(scorer, figures)
  * @TODO: either the pure functional (FP) way, or the pure procedural (in-place) way, but not this mixed style
  *******************************/
 
+const emptyBoard = {next_id: 'fig_1', figures: {}};
+
+/*@TODO procedural*/
 function addFigure(figure, board)
 {
 	var id  = board.next_id;
 	var n  = figureNum(id);
 	board.figures[id] = figure;
 	board.next_id = figureId(n+1);
-	return [id, board];
+	return id;
 }
 
-function deleteFigure(id, board)
-{
-	delete board.figures[id];
-	return board;
-}
+/*@TODO procedural*/
+function deleteFigure(id, board) {delete board.figures[id];}
 
-function updateFigure(id, figure, board)
-{
-	board.figures[id] = figure;
-	return board;
-}
+/*@TODO procedural*/
+function updateFigure(id, figure, board){board.figures[id] = figure;}
 
 
 function figureNum(id) {return parseInt(/.*_(.*)/.exec(id)[1]);}
@@ -68,7 +99,23 @@ function figureId (n ) {return 'fig_' + n;}
  * Drawing figure:
  *******************************/
 
-function drawFigureAux(domainToSvg, figure) {return figure.map(domainToSvg).map(stringifyPositionWithComma).join(' ');}
+function redrawFigure(id, board, domainToSvg, svgElement)
+{
+	var figureElement = document.getElementById(id);
+	if (!figureElement) {
+		figureElement = document.createElementNS(svgNS, 'polygon');
+		figureElement.id = id;
+		svgElement.appendChild(figureElement);
+	}
+	var figure = board.figures[id];
+	var points   = drawFigureAux(domainToSvg, figure.vertices);
+	figureElement.setAttribute('points', points);
+	for (var key in figure) {
+		if (key != 'vertices') figureElement.setAttribute(key, figure[key]);
+	}
+}
+
+function drawFigureAux(domainToSvg, vertices) {return vertices.map(domainToSvg).map(stringifyPositionWithComma).join(' ');}
 
 /**
  * We need this function:

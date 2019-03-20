@@ -1,12 +1,12 @@
 window.onload = main;
 
 var graphicsHeader;
-var svg = svgPoint = circle = null; // set/unset always simultaneosly
+var svg = svgPoint = board = standingFig = movingFig = id_standing = id_moving = null; // set/unset always simultaneosly
 
 function main(event)
 {
 	/** Unit tests*/
-	var status_math = testOr() && testAnd() && testSum() && testSame() && testDet() && testScalarProduct() && testVectorLength() && testAngleOfVectors()  && testSignedRotAngleOfVectors() && testAreConvexVectors() && testAreConcaveVectors() && testEdgeVector() && testAreConvexDirectedEdges() && testAreConcaveDirectedEdges() && testLineSide() && testSectionSide() && testIsPrefixOf() && testVecEq() && testAngleOfEdges() && testTour() && testStatistics() && testAngleMod() && testIsConvex() && testAreConvex() && testRoll() && testRollToJoin() && testSubsequencer() && testSubsequencerRolled() && testDepth() && testExecuteTree() && testFoldl() && testUncurry() && testAngleTyper() && testAngleSumWhenToured() && testSignedRotAngleSumWhenToured() && testAngleTyper_dependent() && testAsciiGraphics() && testInside_convex_ccw() && testInside_convex_cw() && testInside_concave_ccw() && testInside_concave_cw() && testInside_series_convex_ccw() && testInside_series_convex_cw() && testInside_series_degen_ccw() && testInside_series_degen_cw() && testInside_series_concave_ccw() && testInside_series_concave_cw();
+	var status_math = testOr() && testAnd() && testPointwise() && testSum() && testSame() && testDet() && testScalarProduct() && testVectorLength() && testAngleOfVectors()  && testSignedRotAngleOfVectors() && testAreConvexVectors() && testAreConcaveVectors() && testEdgeVector() && testAreConvexDirectedEdges() && testAreConcaveDirectedEdges() && testLineSide() && testSectionSide() && testIsPrefixOf() && testVecEq() && testAngleOfEdges() && testTour() && testStatistics() && testAngleMod() && testIsConvex() && testAreConvex() && testRoll() && testRollToJoin() && testSubsequencer() && testSubsequencerRolled() && testDepth() && testExecuteTree() && testFoldl() && testUncurry() && testAngleTyper() && testAngleSumWhenToured() && testSignedRotAngleSumWhenToured() && testAngleTyper_dependent() && testAsciiGraphics() && testInside_convex_ccw() && testInside_convex_cw() && testInside_concave_ccw() && testInside_concave_cw() && testInside_series_convex_ccw() && testInside_series_convex_cw() && testInside_series_degen_ccw() && testInside_series_degen_cw() && testInside_series_concave_ccw() && testInside_series_concave_cw();
 	var target_math = document.getElementById('result_math');
 	target_math.innerHTML = status_math ? 'OK' : 'Wrong';
 
@@ -18,7 +18,9 @@ function main(event)
 		// Board query
 		testSelectByMax() && testSelectByProp() &&
 		// Board algebra
-		testFigureId() && testFigureNum() && testAddFigure() && testDeleteFigure() && testUpdateFigure();
+		testFigureId() && testFigureNum() && testEmptyBoard() && testAddFigure() && testDeleteFigure() && testUpdateFigure() &&
+		// Geometric transformations (translation, reflection, rotation)
+		testTranslation() && testDoTranslation();
 
 	var target_draw = document.getElementById('result_draw');
 	target_draw.innerHTML = status_draw ? 'OK' : 'Wrong';
@@ -31,32 +33,48 @@ function main(event)
 const svgNS = 'http://www.w3.org/2000/svg';
 const xmlns = 'http://www.w3.org/2000/xmlns/';
 const xlink = 'http://www.w3.org/1999/xlink';
+function domainToSvg_600_400_10(dP) {return domainToSvgFactory([600, 400], 10)(dP);}
+function svgToDomain_600_400_10(sP) {return svgToDomainFactory([600, 400], 10)(sP);}
+
 
 function extendedTests(event)
 {
-	switch (event.target.id) {
-		case 'canvas_button':
+	target = event.target.id;
+	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
+		case /canvas_button/.test(target):
 			destroyGraphics();
 			graphicsHeader.innerHTML = 'Canvas graphics';
 			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
 			setTimeout(testGraphics);
 			break;
-		case 'svg_button':
+		case /svg_button/.test(target):
 			destroyGraphics();
 			graphicsHeader.innerHTML = 'SVG graphics';
-			svg    = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS); // set/unset always simultaneosly
-			circle = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
-			svgPoint = svg.createSVGPoint();                                                                             // set/unset always simultaneosly
+			svg         = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);   // set/unset always simultaneosly
+			svgPoint    = svg.createSVGPoint();                                                                                 // set/unset always simultaneosly
+			//circle      = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
+			board       = emptyBoard;                                                                                           // set/unset always simultaneosly
+			standingFig = {grasp: [0, 0], vertices: [[ 2,  3], [ 6,  3], [ 5,  5]          ], fill: 'red' } ;                   // set/unset always simultaneosly
+			movingFig   = {grasp: [0, 0], vertices: [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], fill: 'blue'};                    // set/unset always simultaneosly
+			/*@TODO procedural*/ id_standing = addFigure(standingFig, board);
+			/*@TODO procedural*/ id_moving   = addFigure(movingFig  , board);
+			redrawFigure(id_standing, board, domainToSvg_600_400_10, svg);
+			redrawFigure(id_moving  , board, domainToSvg_600_400_10, svg);
 			//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
 			//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
 			break;
-		case 'screen':
-			if (svg && svgPoint && circle) { // svg <-> svgPoint <-> circle
+		case /screen|fig_.*/.test(target):
+			if (svg && svgPoint) { // svg <-> svgPoint <-> ...
 				svgPoint.x = event.clientX;
 				svgPoint.y = event.clientY;
-				var showPoint = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
-				circle.setAttribute('cx', showPoint.x);
-				circle.setAttribute('cy', showPoint.y);
+				var showPoint        = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+				var clickDomainPoint = svgToDomain_600_400_10([showPoint.x, showPoint.y]);
+				var displacement     = fromTo(movingFig.grasp, clickDomainPoint);
+				/*@TODO procedural*/doTranslation(displacement, movingFig);
+				/*@TODO procedural*/updateFigure(id_moving, movingFig, board);
+				redrawFigure(id_moving, board, domainToSvg_600_400_10, svg);
+				//circle.setAttribute('cx', showPoint.x);
+				//circle.setAttribute('cy', showPoint.y);
 			}
 	}
 }
@@ -64,7 +82,7 @@ function extendedTests(event)
 function destroyGraphics()
 {
 	deleteElementsWithTagNames(['canvas', 'svg']);
-	svg = svgPoint = circle = null; // set/unset always simultaneosly
+	svg = svgPoint = circle = board = standingFig = movingFig = id_standing = id_moving = null; // set/unset always simultaneosly
 }
 
 
@@ -1699,6 +1717,11 @@ function testSum()
 		sum([45       ]) == 45 &&
 		sum([ 4, 7    ]) == 11 &&
 		sum([ 5, 3, 12]) == 20;
+}
+
+function testPointwise()
+{
+	return	vecEq(pointwise(bPlus)([2, 3, 5], [7, 11, 13]), [9, 14, 18]);
 }
 
 function testAnd()
