@@ -8,17 +8,15 @@ function testEmptyBoard() {return vecEq(emptyBoard, {next_id: 'fig_1', figures: 
 /*@TODO procedural*/
 function testAddFigure()
 {
-	var board =
+	var board = new Board(
+		'fig_12',
 		{
-			next_id: 'fig_12',
-			figures:
-				{
-					fig_1: {grasp: [0, 0], vertices: [[ 0,0], [ 2,0], [ 1,1]], fill: 'red'  }, // a triangle
-					fig_4: {grasp: [0, 0], vertices: [[10,0], [12,0], [11,1]], fill: 'green'}, // another triangle further away
-					fig_6: {grasp: [0, 0], vertices: [[20,0], [22,0], [21,1]], fill: 'blue' }  // a third triangle even further away
-				}
-		};
-	var flag1 = addFigure({grasp: [0, 0], vertices: [[-1,-1], [-3,-1], [-2,-2]], fill: 'magenta'}, board) == 'fig_12';
+			fig_1: {grasp: [0, 0], vertices: [[ 0,0], [ 2,0], [ 1,1]], fill: 'red'  }, // a triangle
+			fig_4: {grasp: [0, 0], vertices: [[10,0], [12,0], [11,1]], fill: 'green'}, // another triangle further away
+			fig_6: {grasp: [0, 0], vertices: [[20,0], [22,0], [21,1]], fill: 'blue' }  // a third triangle even further away
+		}
+	);
+	var flag1 = board.addFigure({grasp: [0, 0], vertices: [[-1,-1], [-3,-1], [-2,-2]], fill: 'magenta'}) == 'fig_12';
 	var flag2 = vecEq(
 			board,
 			{
@@ -38,17 +36,15 @@ function testAddFigure()
 /*@TODO procedural*/
 function testDeleteFigure()
 {
-	var board =
+	var board = new Board(
+		'fig_12',
 		{
-			next_id: 'fig_12',
-			figures:
-				{
-					fig_1: {grasp: [0, 0], vertices: [[ 0,0], [ 2,0], [ 1,1]], fill: 'red'  }, // a triangle
-					fig_4: {grasp: [0, 0], vertices: [[10,0], [12,0], [11,1]], fill: 'green'}, // another triangle further away
-					fig_6: {grasp: [0, 0], vertices: [[20,0], [22,0], [21,1]], fill: 'blue' }  // a third triangle even further away
-				}
-		};
-	deleteFigure('fig_4', board);
+			fig_1: {grasp: [0, 0], vertices: [[ 0,0], [ 2,0], [ 1,1]], fill: 'red'  }, // a triangle
+			fig_4: {grasp: [0, 0], vertices: [[10,0], [12,0], [11,1]], fill: 'green'}, // another triangle further away
+			fig_6: {grasp: [0, 0], vertices: [[20,0], [22,0], [21,1]], fill: 'blue' }  // a third triangle even further away
+		}
+	);
+	board.deleteFigure('fig_4');
 	return	vecEq(
 			board,
 			{
@@ -65,18 +61,15 @@ function testDeleteFigure()
 /*@TODO procedural*/
 function testUpdateFigure()
 {
-	var board =
+	var board = new Board(
+		'fig_12',
 		{
-			next_id: 'fig_12',
-			figures:
-				{
-					fig_1: {grasp: [0, 0], vertices: [[ 0,0], [ 2,0], [ 1,1]], fill: 'red'  }, // a triangle
-					fig_4: {grasp: [0, 0], vertices: [[10,0], [12,0], [11,1]], fill: 'green'}, // another triangle further away
-					fig_6: {grasp: [0, 0], vertices: [[20,0], [22,0], [21,1]], fill: 'blue' }  // a third triangle even further away
-				}
-		};
-
-	updateFigure('fig_4', {grasp: [1, 0], vertices: [[11,0], [13,0], [12,1]], fill: 'magenta'}, board);
+			fig_1: {grasp: [0, 0], vertices: [[ 0,0], [ 2,0], [ 1,1]], fill: 'red'  }, // a triangle
+			fig_4: {grasp: [0, 0], vertices: [[10,0], [12,0], [11,1]], fill: 'green'}, // another triangle further away
+			fig_6: {grasp: [0, 0], vertices: [[20,0], [22,0], [21,1]], fill: 'blue' }  // a third triangle even further away
+		}
+	);
+	board.updateFigure('fig_4', {grasp: [1, 0], vertices: [[11,0], [13,0], [12,1]], fill: 'magenta'});
 	return	vecEq(
 			board,
 			{

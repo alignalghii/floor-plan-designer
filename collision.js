@@ -211,7 +211,8 @@ function eq(a, b)
 function isPrefixOf(as, bs)
 {
 	var ret = true;
-	for (i in as) ret = ret && (i in bs) && eq(bs[i], as[i]);
+	function andFoundInBs(key) {ret = ret && (key in bs) && bs.hasOwnProperty(key) && eq(bs[key], as[key]);} // @TODO: `i in bs` should be filtered too for bs.hasOwnProperty(i)
+	Object.keys(as).forEach(andFoundInBs);
 	return ret;
 }
 
