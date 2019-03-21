@@ -1,3 +1,10 @@
+function statistics(differ, xs)
+{
+	var diffs = tour(xs).map(uncurry(differ));
+	return sum(diffs);
+}
+
+
 function roll(xs)
 {
 	var res = [];

@@ -1,3 +1,32 @@
+const poly1_convex_ccw = [[2, 1], [6, 2], [7, 5], [5, 7], [1, 6]];
+const poly1_convex_cw  = [[2, 1], [1, 6], [5, 7], [7, 5], [6, 2]];
+
+const poly1_concave_ccw = [[ 4, -1], [ 7,  2], [ 5,  2], [ 4,  4], [ 5,  7], [ 3,  9], [ 3,  3], [-3,  5], [-3,  2], [-1,  1], [-2,  -2]];
+const poly1_concave_cw  = [[ 4, -1], [-2, -2], [-1,  1], [-3,  2], [-3,  5], [ 3,  3], [ 3,  9], [ 5,  7], [ 4,  4], [ 5,  2], [ 7,  2]];
+
+const poly2_convex_ccw  = [[ 0, -2], [ 2, -1], [ 0,  1], [-2, -1]];
+const poly2_convex_cw   = [[ 0, -2], [-2, -1], [ 0,  1], [ 2, -1]];
+const poly2_degen_ccw   = [[ 0, -1], [ 2, -1], [ 0,  1], [-2, -1]];
+const poly2_degen_cw    = [[ 0, -1], [-2, -1], [ 0,  1], [ 2, -1]];
+const poly2_concave_ccw = [[ 0,  0], [ 2, -1], [ 0,  1], [-2, -1]];
+const poly2_concave_cw  = [[ 0,  0], [-2, -1], [ 0,  1], [ 2, -1]];
+
+
+
+function asciiGraphics(x0, y0, x1, y1, figure, step = 1, on = '#', off = '.')
+{
+	var graph = '';
+	for (var y = y1; y >= y0; y -=step) {
+		for (var x = x0; x <= x1; x+=step) {
+			var pixel = inside([x, y], figure) ? on : off;
+			graph += pixel;
+		}
+		graph += "\n";
+	}
+	return graph;
+}
+
+
 function inside(point, figure)
 {
 	var edges = tour(figure);
