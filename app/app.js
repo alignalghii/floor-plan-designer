@@ -28,6 +28,7 @@ function main(event)
 	/* Dynamic graphics areas */
 	graphicsHeader = document.getElementById('graphics_header');
 	document.addEventListener('click', extendedTests);
+	doSvg();
 }
 
 const svgNS = 'http://www.w3.org/2000/svg';
@@ -35,6 +36,23 @@ const xmlns = 'http://www.w3.org/2000/xmlns/';
 const xlink = 'http://www.w3.org/1999/xlink';
 function domainToSvg_600_400_10(dP) {return domainToSvgFactory([600, 400], 10)(dP);}
 function svgToDomain_600_400_10(sP) {return svgToDomainFactory([600, 400], 10)(sP);}
+
+function doSvg()
+{
+	graphicsHeader.innerHTML = 'SVG graphics';
+	svg         = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);   // set/unset always simultaneosly
+	svgPoint    = svg.createSVGPoint();                                                                                 // set/unset always simultaneosly
+	//circle      = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
+	board       = emptyBoard;                                                                                           // set/unset always simultaneosly
+	standingFig = new Figure([0, 0], [[ 2,  3], [ 6,  3], [ 5,  5]          ], {fill: 'red' });                         // set/unset always simultaneosly
+	movingFig   = new Figure([0, 0], [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], {fill: 'blue'});                         // set/unset always simultaneosly
+	/*@TODO procedural*/ id_standing = board.addFigure(standingFig);
+	/*@TODO procedural*/ id_moving   = board.addFigure(movingFig  );
+	redrawFigure(id_standing, board, domainToSvg_600_400_10, svg);
+	redrawFigure(id_moving  , board, domainToSvg_600_400_10, svg);
+	//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
+	//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
+}
 
 
 function extendedTests(event)
@@ -49,19 +67,7 @@ function extendedTests(event)
 			break;
 		case /svg_button/.test(target):
 			destroyGraphics();
-			graphicsHeader.innerHTML = 'SVG graphics';
-			svg         = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);   // set/unset always simultaneosly
-			svgPoint    = svg.createSVGPoint();                                                                                 // set/unset always simultaneosly
-			//circle      = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
-			board       = emptyBoard;                                                                                           // set/unset always simultaneosly
-			standingFig = new Figure([0, 0], [[ 2,  3], [ 6,  3], [ 5,  5]          ], {fill: 'red' });                         // set/unset always simultaneosly
-			movingFig   = new Figure([0, 0], [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], {fill: 'blue'});                         // set/unset always simultaneosly
-			/*@TODO procedural*/ id_standing = board.addFigure(standingFig);
-			/*@TODO procedural*/ id_moving   = board.addFigure(movingFig  );
-			redrawFigure(id_standing, board, domainToSvg_600_400_10, svg);
-			redrawFigure(id_moving  , board, domainToSvg_600_400_10, svg);
-			//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
-			//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
+			doSvg();
 			break;
 		case /screen|fig_.*/.test(target):
 			if (svg && svgPoint) { // svg <-> svgPoint <-> ...
