@@ -55,19 +55,11 @@ function extendedTests(event)
 			SvgSingletonGlobals.reload();
 			break;
 		case /screen|fig_.*/.test(target):
-			if (SvgSingletonGlobals.svg && SvgSingletonGlobals.svgPoint) { // svg <-> svgPoint <-> ...
-				SvgSingletonGlobals.svgPoint.x = event.clientX;
-				SvgSingletonGlobals.svgPoint.y = event.clientY;
-				var showPoint        = SvgSingletonGlobals.svgPoint.matrixTransform(SvgSingletonGlobals.svg.getScreenCTM().inverse());
-				var clickDomainPoint = svgToDomain_600_400_10([showPoint.x, showPoint.y]);
-				var displacement     = fromTo(SvgSingletonGlobals.movingFig.grasp, clickDomainPoint);
-				SvgSingletonGlobals.movingFig.doTranslation(displacement);                                                                   // @TODO procedural
-				SvgSingletonGlobals.board.updateFigure(SvgSingletonGlobals.id_moving, SvgSingletonGlobals.movingFig);                        // @TODO procedural
-				redrawFigure(SvgSingletonGlobals.id_moving, SvgSingletonGlobals.board, domainToSvg_600_400_10, SvgSingletonGlobals.svg);
+			if (SvgSingletonGlobals.hasBeenSet()) {
+				SvgSingletonGlobals.assimilateEventPosition(event);
 			}
 	}
 }
-
 
 function createGraphics(tagName, id, width, height, namespaceURI = null)
 {
