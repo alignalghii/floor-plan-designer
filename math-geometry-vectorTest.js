@@ -21,8 +21,6 @@ function testVectorLength()
 		vectorLength([-3, -4]) == 5 ;
 }
 
-function cca(x, r) {return Math.abs(x - r) < 0.001;}
-
 function testSignedRotAngleOfVectors()
 {
 	return	cca(signedRotAngleOfVectors([ 1,  0], [ 0,  1]),  90) &&
