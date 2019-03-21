@@ -83,25 +83,8 @@ function executeTree(op_extern, const_extern, op_intern, const_intern, op_splice
 	return result;
 }
 
-function uncurry(f) {return function ([a, b]) {return f(a, b);};}
 
-function foldl(op, cnst, lst) // @TODO same as `Array.prototype.reduce`?
-{
-	var result = cnst;
-	lst.forEach(function (item) {result = op(result, item);});
-	return result;
-}
 
-function depth(xs)
-{
-	if (typeof xs == 'object') {
-		var maxDepth = 0;
-		xs.forEach(function (item) {var currentDepth = depth(item); if (currentDepth > maxDepth) maxDepth = currentDepth;});
-		return maxDepth + 1;
-	} else {
-		return 0;
-	}
-}
 
 function subsequencerRolled(xs, f)
 {
@@ -158,16 +141,6 @@ function rollToJoin(xs, f)
 	return xs;
 }
 
-function roll(xs)
-{
-	var res = [];
-	if (xs.length > 0) {
-		var last = xs.length-1;
-		res.push(xs[last]);
-		xs.forEach(function(x,i){if(i<last) res.push(x);});
-	}
-	return res;
-}
 
 function areConvex(a, b) {return isConvex(b-a);}
 function areConvex(a, b) {return isConvex(b-a);}
@@ -181,40 +154,10 @@ function statistics(differ, xs)
 	return sum(diffs);
 }
 
-function tour(xs)
-{
-	if (xs.length == 0) {
-		return [];
-	} else {
-		var ret   = [];
-		var x0 = first = xs[0];
-		xs.forEach (function (x, key) {if (key > 0) ret.push([x0, x]); x0 = x});
-		ret.push([x0, first]);
-		return ret;
-	}
-}
 
 function signedRotAngleOfEdges(e, f) {return signedRotAngleOfVectors(edgeVector(e), edgeVector(f));}
 function angleOfEdges(e, f) {return angleOfVectors(edgeVector(e), edgeVector(f));}
 
-function vecEq(u, v) {return isPrefixOf(u, v) && isPrefixOf(v, u);}
-
-function eq(a, b)
-{
-	if (typeof a == 'object' && typeof b == 'object') {
-		return vecEq(a, b);
-	} else {
-		return a == b;
-	} 
-}
-
-function isPrefixOf(as, bs)
-{
-	var ret = true;
-	function andFoundInBs(key) {ret = ret && (key in bs) && bs.hasOwnProperty(key) && eq(bs[key], as[key]);} // @TODO: `i in bs` should be filtered too for bs.hasOwnProperty(i)
-	Object.keys(as).forEach(andFoundInBs);
-	return ret;
-}
 
 function sectionSide(point1, point2, testPoint)
 {
@@ -235,12 +178,6 @@ function areConvexVectors  (u, v) {return det(u, v) >= 0;}
 function areConcaveVectors (u, v) {return det(u, v) <  0;}
 function areConcave0Vectors(u, v) {return det(u, v) <= 0;}
 
-function minus(a, b)
-{
-	var [a1, a2] = a;
-	var [b1, b2] = b;
-	return [a1-b1, a2-b2];
-}
 
 function fromTo(a, b)
 {
@@ -272,40 +209,3 @@ function det(a, b)
 	var [b1, b2] = b;
 	return a1*b2 - a2*b1;
 }
-
-function same(stats)
-{
-	return lAnd(stats) || !lOr(stats);
-}
-
-function sum(xs) {return xs.reduce(bPlus, 0);} // `foldl(bPlus, 0, xs)`
-
-function pointwise(f)
-{
-	function pf(xs, ys)
-	{
-		var res = [];
-		function pushSum(val, key) {res.push(val + ys[key]);}
-		xs.forEach(pushSum);
-		return res;
-	}
-	return pf;
-}
-
-function lAnd(stats)
-{
-	var status = true;
-	stats.forEach(function (stat) {status = status && stat;})
-	return status;
-}
-
-function lOr(stats)
-{
-	var status = false;
-	stats.forEach(function (stat) {status = status || stat;})
-	return status;
-}
-
-function bPlus(a, b) {return a + b;}
-function bAnd (a, b) {return a && b;}
-function bOr (a, b) {return a || b;}
