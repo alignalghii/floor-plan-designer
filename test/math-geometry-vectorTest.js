@@ -68,3 +68,27 @@ function testDet()
 		det([ 2,  1], [ 1,  0]) <  0 &&
 		det([ 2,  1], [ 2,  0]) <  0;
 }
+
+
+
+/******************************
+ * Transition between coordinate sytems:
+ ******************************/
+
+function testDomainToSvgFactory()
+{
+	return	vecEq(domainToSvgFactory([600, 400], 10)([  0,   0]), [300, 200]) &&
+		vecEq(domainToSvgFactory([600, 400], 10)([  3,   2]), [330, 180]) &&
+		vecEq(domainToSvgFactory([600, 400], 10)([  3,  -2]), [330, 220]) &&
+		vecEq(domainToSvgFactory([600, 400], 10)([ -3,   2]), [270, 180]) &&
+		vecEq(domainToSvgFactory([600, 400], 10)([ -3,  -2]), [270, 220]) ;
+}
+
+function testSvgToDomainFactory()
+{
+	return	vecEq(svgToDomainFactory([600, 400], 10)([300, 200]), [ 0,  0]) &&
+		vecEq(svgToDomainFactory([600, 400], 10)([330, 180]), [ 3,  2]) &&
+		vecEq(svgToDomainFactory([600, 400], 10)([330, 220]), [ 3, -2]) &&
+		vecEq(svgToDomainFactory([600, 400], 10)([270, 180]), [-3,  2]) &&
+		vecEq(svgToDomainFactory([600, 400], 10)([270, 220]), [-3, -2]) ;
+}
