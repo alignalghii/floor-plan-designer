@@ -1,4 +1,3 @@
-
 function graphics(ctx, x0, y0, x1, y1, figure, step, o1, o2, fillStyle)
 {
 	ctx.fillStyle = fillStyle;
@@ -177,35 +176,3 @@ function edgeVector([p, q]) {return fromTo(p, q);}
 function areConvexVectors  (u, v) {return det(u, v) >= 0;}
 function areConcaveVectors (u, v) {return det(u, v) <  0;}
 function areConcave0Vectors(u, v) {return det(u, v) <= 0;}
-
-
-function fromTo(a, b)
-{
-	var [a1, a2] = a;
-	var [b1, b2] = b;
-	return [b1-a1, b2-a2];
-}
-
-function scalarProduct ([a, b], [c, d]) {return a*c + b*d;}
-function vectorLength  ([a, b]        ) {return Math.sqrt(a*a + b*b);}
-function angleOfVectors(u , v)
-{
-	var val = scalarProduct(u, v) / (vectorLength(u) * vectorLength(v));
-	if (val >  1) val =  1;
-	if (val < -1) val = -1;
-	return Math.acos(val) * 180 / Math.PI;
-}
-
-function signedRotAngleOfVectors(u , v)
-{
-	var measure = angleOfVectors(u, v);
-	var dir = det(u, v);
-	return (dir >= 0 ? 1 : -1) * measure;
-}
-
-function det(a, b)
-{
-	var [a1, a2] = a;
-	var [b1, b2] = b;
-	return a1*b2 - a2*b1;
-}
