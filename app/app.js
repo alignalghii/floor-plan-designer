@@ -1,7 +1,7 @@
 window.onload = main;
 
 var graphicsHeader;
-var svg = svgPoint = board = standingFig = movingFig = id_standing = id_moving = null; // set/unset always simultaneosly
+//const svgSingletonGlobals = new SvgSingletonGlobals(); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale)
 
 function main(event)
 {
@@ -26,9 +26,10 @@ function main(event)
 	target_draw.innerHTML = status_draw ? 'OK' : 'Wrong';
 
 	/* Dynamic graphics areas */
-	graphicsHeader = document.getElementById('graphics_header');
 	document.addEventListener('click', extendedTests);
-	doSvg();
+	graphicsHeader = document.getElementById('graphics_header');
+	graphicsHeader.innerHTML = 'SVG graphics';
+	SvgSingletonGlobals.reload(); // @TODO No need to predelete `canvas` and `svg` elements
 }
 
 const svgNS = 'http://www.w3.org/2000/svg';
@@ -37,58 +38,34 @@ const xlink = 'http://www.w3.org/1999/xlink';
 function domainToSvg_600_400_10(dP) {return domainToSvgFactory([600, 400], 10)(dP);}
 function svgToDomain_600_400_10(sP) {return svgToDomainFactory([600, 400], 10)(sP);}
 
-function doSvg()
-{
-	graphicsHeader.innerHTML = 'SVG graphics';
-	svg         = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:600,height:400}, svgNS);   // set/unset always simultaneosly
-	svgPoint    = svg.createSVGPoint();                                                                                 // set/unset always simultaneosly
-	//circle      = createAndAppendChildWithAttrs(svg          , 'circle', {cx:200, cy:200, r:80}             , svgNS); // set/unset always simultaneosly
-	board       = emptyBoard;                                                                                           // set/unset always simultaneosly
-	standingFig = new Figure([0, 0], [[ 2,  3], [ 6,  3], [ 5,  5]          ], {fill: 'red' });                         // set/unset always simultaneosly
-	movingFig   = new Figure([0, 0], [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], {fill: 'blue'});                         // set/unset always simultaneosly
-	/*@TODO procedural*/ id_standing = board.addFigure(standingFig);
-	/*@TODO procedural*/ id_moving   = board.addFigure(movingFig  );
-	redrawFigure(id_standing, board, domainToSvg_600_400_10, svg);
-	redrawFigure(id_moving  , board, domainToSvg_600_400_10, svg);
-	//svg.setAttributeNS(xmlns, 'xmlns'      , svgNS);
-	//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
-}
-
 
 function extendedTests(event)
 {
 	target = event.target.id;
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
 		case /canvas_button/.test(target):
-			destroyGraphics();
+			SvgSingletonGlobals.renull();
 			graphicsHeader.innerHTML = 'Canvas graphics';
 			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
 			setTimeout(testGraphics);
 			break;
 		case /svg_button/.test(target):
-			destroyGraphics();
-			doSvg();
+			SvgSingletonGlobals.renull();
+			graphicsHeader.innerHTML = 'SVG graphics';
+			SvgSingletonGlobals.reload();
 			break;
 		case /screen|fig_.*/.test(target):
-			if (svg && svgPoint) { // svg <-> svgPoint <-> ...
-				svgPoint.x = event.clientX;
-				svgPoint.y = event.clientY;
-				var showPoint        = svgPoint.matrixTransform(svg.getScreenCTM().inverse());
+			if (SvgSingletonGlobals.svg && SvgSingletonGlobals.svgPoint) { // svg <-> svgPoint <-> ...
+				SvgSingletonGlobals.svgPoint.x = event.clientX;
+				SvgSingletonGlobals.svgPoint.y = event.clientY;
+				var showPoint        = SvgSingletonGlobals.svgPoint.matrixTransform(SvgSingletonGlobals.svg.getScreenCTM().inverse());
 				var clickDomainPoint = svgToDomain_600_400_10([showPoint.x, showPoint.y]);
-				var displacement     = fromTo(movingFig.grasp, clickDomainPoint);
-				/*@TODO procedural*/movingFig.doTranslation(displacement);
-				/*@TODO procedural*/board.updateFigure(id_moving, movingFig);
-				redrawFigure(id_moving, board, domainToSvg_600_400_10, svg);
-				//circle.setAttribute('cx', showPoint.x);
-				//circle.setAttribute('cy', showPoint.y);
+				var displacement     = fromTo(SvgSingletonGlobals.movingFig.grasp, clickDomainPoint);
+				SvgSingletonGlobals.movingFig.doTranslation(displacement);                                                                   // @TODO procedural
+				SvgSingletonGlobals.board.updateFigure(SvgSingletonGlobals.id_moving, SvgSingletonGlobals.movingFig);                        // @TODO procedural
+				redrawFigure(SvgSingletonGlobals.id_moving, SvgSingletonGlobals.board, domainToSvg_600_400_10, SvgSingletonGlobals.svg);
 			}
 	}
-}
-
-function destroyGraphics()
-{
-	deleteElementsWithTagNames(['canvas', 'svg']);
-	svg = svgPoint = circle = board = standingFig = movingFig = id_standing = id_moving = null; // set/unset always simultaneosly
 }
 
 
