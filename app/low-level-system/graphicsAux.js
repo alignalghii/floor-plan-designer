@@ -1,3 +1,7 @@
+const svgNS = 'http://www.w3.org/2000/svg';
+const xmlns = 'http://www.w3.org/2000/xmlns/';
+const xlink = 'http://www.w3.org/1999/xlink';
+
 function redrawFigure(id, board, domainToSvg, svgElement)
 {
 	var figureElement = document.getElementById(id);

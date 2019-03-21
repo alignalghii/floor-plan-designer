@@ -1,7 +1,6 @@
 window.onload = main;
 
-var graphicsHeader;
-//const svgSingletonGlobals = new SvgSingletonGlobals(); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale)
+var graphicsHeader, svgSingletonGlobals;
 
 function main(event)
 {
@@ -29,14 +28,9 @@ function main(event)
 	document.addEventListener('click', extendedTests);
 	graphicsHeader = document.getElementById('graphics_header');
 	graphicsHeader.innerHTML = 'SVG graphics';
-	SvgSingletonGlobals.reload(); // @TODO No need to predelete `canvas` and `svg` elements
+	svgSingletonGlobals = new SvgSingletonGlobals([600, 400], 10); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale);
+	svgSingletonGlobals.reload(); // @TODO No need to predelete `canvas` and `svg` elements
 }
-
-const svgNS = 'http://www.w3.org/2000/svg';
-const xmlns = 'http://www.w3.org/2000/xmlns/';
-const xlink = 'http://www.w3.org/1999/xlink';
-function domainToSvg_600_400_10(dP) {return domainToSvgFactory([600, 400], 10)(dP);}
-function svgToDomain_600_400_10(sP) {return svgToDomainFactory([600, 400], 10)(sP);}
 
 
 function extendedTests(event)
@@ -44,37 +38,26 @@ function extendedTests(event)
 	target = event.target.id;
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
 		case /canvas_button/.test(target):
-			SvgSingletonGlobals.renull();
+			svgSingletonGlobals.renullAlsoVisually();
 			graphicsHeader.innerHTML = 'Canvas graphics';
 			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
 			setTimeout(testGraphics);
 			break;
 		case /svg_button/.test(target):
-			SvgSingletonGlobals.renull();
+			svgSingletonGlobals.renullAlsoVisually();
 			graphicsHeader.innerHTML = 'SVG graphics';
-			SvgSingletonGlobals.reload();
+			svgSingletonGlobals.reload();
 			break;
 		case /screen|fig_.*/.test(target):
-			if (SvgSingletonGlobals.hasBeenSet()) {
-				SvgSingletonGlobals.assimilateEventPosition(event);
+			if (svgSingletonGlobals.hasBeenSet()) {
+				svgSingletonGlobals.assimilateEventPosition(event);
 			}
 	}
 }
 
+// @TODO obsolete, unused
 function createGraphics(tagName, id, width, height, namespaceURI = null)
 {
 	var attrs = {id:id, width:width, height:height};
 	return createElementWithAttributes(tagName, attrs, namespaceURI);
-}
-
-
-function testGraphics()
-{
-	var canvas = document.getElementById('screen');
-	var ctx = canvas.getContext('2d');
-	graphics(ctx,  0,  0, 8,  8, poly1_convex_ccw , 50,   0, 400, "rgb(200,   0, 0)");
-	graphics(ctx, -4, -3, 8, 10, poly1_concave_ccw, 50, 500, 500, "rgb(160,  40, 0)");
-	graphics(ctx, -3, -3, 3,  2, poly2_convex_ccw , 50, 100, 700, "rgb(  0, 200, 0)");
-	graphics(ctx, -3, -3, 3,  2, poly2_degen_ccw  , 50, 350, 700, "rgb(  0, 160,40)");
-	graphics(ctx, -3, -3, 3,  2, poly2_concave_ccw, 50, 600, 700, "rgb(  0, 120,80)");
 }
