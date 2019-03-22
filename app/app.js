@@ -1,6 +1,5 @@
+var svgSingletonGlobals;
 window.onload = main;
-
-var graphicsHeader, svgSingletonGlobals;
 
 function main(event)
 {
@@ -26,10 +25,7 @@ function main(event)
 
 	/* Dynamic graphics areas */
 	document.addEventListener('click', extendedTests);
-	graphicsHeader = document.getElementById('graphics_header');
-	graphicsHeader.innerHTML = 'SVG graphics';
 	svgSingletonGlobals = new SvgSingletonGlobals([600, 400], 10); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale);
-	svgSingletonGlobals.reload(); // @TODO No need to predelete `canvas` and `svg` elements
 }
 
 
@@ -39,19 +35,17 @@ function extendedTests(event)
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
 		case /canvas_button/.test(target):
 			svgSingletonGlobals.renullAlsoVisually();
-			graphicsHeader.innerHTML = 'Canvas graphics';
+			document.getElementById('graphics_header').innerHTML = 'Canvas graphics';
 			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
 			setTimeout(testGraphics);
 			break;
 		case /svg_button/.test(target):
 			svgSingletonGlobals.renullAlsoVisually();
-			graphicsHeader.innerHTML = 'SVG graphics';
 			svgSingletonGlobals.reload();
 			break;
 		case /screen|fig_.*/.test(target):
-			if (svgSingletonGlobals.hasBeenSet()) {
-				svgSingletonGlobals.assimilateEventPosition(event);
-			}
+			svgSingletonGlobals.assimilateEventPosition(event);
+			break;
 	}
 }
 

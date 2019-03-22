@@ -8,7 +8,10 @@ function SvgSingletonGlobals(svgSize, coordsysTransfScale)
 	this.svgSize     = svgSize;
 	this.domainToSvg = domainToSvgFactory(svgSize, coordsysTransfScale);
 	this.svgToDomain = svgToDomainFactory(svgSize, coordsysTransfScale);
-	this.renull();
+
+	this.graphicsHeader = document.getElementById('graphics_header');
+
+	this.reload();
 }
 
 SvgSingletonGlobals.prototype.renull = function () {
@@ -22,6 +25,7 @@ SvgSingletonGlobals.prototype.renullAlsoVisually = function () {
 },
 
 SvgSingletonGlobals.prototype.reload = function () {
+	this.graphicsHeader.innerHTML = 'SVG graphics';
 	var [svgWidth, svgHeight] = this.svgSize;
 	this.svg         = createAndAppendChildWithAttrs(document.body, 'svg'   , {id:'screen', width:svgWidth, height:svgHeight}, svgNS);   // set/unset always simultaneosly
 	this.svgPoint    = this.svg.createSVGPoint();                                                                            // set/unset always simultaneosly
@@ -38,14 +42,16 @@ SvgSingletonGlobals.prototype.reload = function () {
 },
 
 SvgSingletonGlobals.prototype.assimilateEventPosition = function (event) {
-	this.svgPoint.x = event.clientX;
-	this.svgPoint.y = event.clientY;
-	var showPoint        = this.svgPoint.matrixTransform(this.svg.getScreenCTM().inverse());
-	var clickDomainPoint = this.svgToDomain([showPoint.x, showPoint.y]);
-	var displacement     = fromTo(this.movingFig.grasp, clickDomainPoint);
-	this.movingFig.doTranslation(displacement);                                     // @TODO procedural
-	this.board.updateFigure(this.id_moving, this.movingFig);                        // @TODO procedural
-	redrawFigure(this.id_moving, this.board, this.domainToSvg, this.svg);
+	if (this.hasBeenSet()) {
+		this.svgPoint.x = event.clientX;
+		this.svgPoint.y = event.clientY;
+		var showPoint        = this.svgPoint.matrixTransform(this.svg.getScreenCTM().inverse());
+		var clickDomainPoint = this.svgToDomain([showPoint.x, showPoint.y]);
+		var displacement     = fromTo(this.movingFig.grasp, clickDomainPoint);
+		this.movingFig.doTranslation(displacement);                                     // @TODO procedural
+		this.board.updateFigure(this.id_moving, this.movingFig);                        // @TODO procedural
+		redrawFigure(this.id_moving, this.board, this.domainToSvg, this.svg);
+	}
 },
 
 SvgSingletonGlobals.prototype.hasBeenSet = function () {
