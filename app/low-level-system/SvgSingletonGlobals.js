@@ -11,7 +11,7 @@ function SvgSingletonGlobals(svgSize, coordsysTransfScale)
 
 	this.graphicsHeader = document.getElementById('graphics_header');
 
-	this.reload();
+	this.renull();
 }
 
 SvgSingletonGlobals.prototype.renull = function () {
@@ -20,7 +20,7 @@ SvgSingletonGlobals.prototype.renull = function () {
 
 
 SvgSingletonGlobals.prototype.renullAlsoVisually = function () {
-	deleteElementsWithTagNames(['canvas', 'svg']);
+	deleteElementsWithTagName('svg');
 	this.renull();
 },
 

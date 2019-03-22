@@ -1,4 +1,4 @@
-var svgSingletonGlobals;
+var svgSingletonGlobals, html5Canvas;
 window.onload = main;
 
 function main(event)
@@ -26,6 +26,8 @@ function main(event)
 	/* Dynamic graphics areas */
 	document.addEventListener('click', extendedTests);
 	svgSingletonGlobals = new SvgSingletonGlobals([600, 400], 10); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale);
+	svgSingletonGlobals.reload();                             // svg gets rendered
+	html5Canvas         = new Html5Canvas([1000, 1000]);      // canvas only declared
 }
 
 
@@ -35,11 +37,10 @@ function extendedTests(event)
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
 		case /canvas_button/.test(target):
 			svgSingletonGlobals.renullAlsoVisually();
-			document.getElementById('graphics_header').innerHTML = 'Canvas graphics';
-			var canvas = createAndAppendChildWithAttrs(document.body, 'canvas', {id:'screen', width:1000, height:1000});
-			setTimeout(testGraphics);
+			html5Canvas.doCanvas();
 			break;
 		case /svg_button/.test(target):
+			html5Canvas.away();
 			svgSingletonGlobals.renullAlsoVisually();
 			svgSingletonGlobals.reload();
 			break;
