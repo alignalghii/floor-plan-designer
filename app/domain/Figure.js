@@ -15,12 +15,13 @@ Figure.prototype.translation = function ([dx, dy])
 {
 	function displace([x,y]) {return [x+dx, y+dy];}  // @TODO curry(pointwise(bPlus))(displacement)
 
-	var figureOut = {}, value;
+	var objectOut = {}; // @TODO make `testTranslation` stricter, it should fail if this implementation returned a naked literal object instead of a Figure instance with methods
+	var value;
 	for (var key in this) {
 		if (this.hasOwnProperty(key)) {
 			switch (key) {
 				case 'grasp':
-					var [x0, y0] = this.grasp;
+					var [x0, y0] = [this.grasp[0], this.grasp[1]];
 					value = [x0+dx, y0+dy];
 					break;
 				case 'vertices':
@@ -29,10 +30,11 @@ Figure.prototype.translation = function ([dx, dy])
 				default:
 					value = this[key];
 			}
-			figureOut[key] = value;
+			objectOut[key] = value;
 		}
 	}
-	return figureOut;
+	return new Figure(objectOut.grasp, objectOut.vertices);
+	// @TODO make `testTranslation` stricter, it should fail if this implementation returned a naked literal object instead of a Figure instance with methods
 }
 
 Figure.prototype.doTranslation = function ([dx, dy])
@@ -42,3 +44,6 @@ Figure.prototype.doTranslation = function ([dx, dy])
 	this.grasp[0] += dx;
 	this.grasp[1] += dy;
 }
+
+Figure.prototype.collidesTowards = function (figure) {return collidesTowards(this.vertices, figure.vertices);};
+Figure.prototype.collides        = function (figure) {return collides       (this.vertices, figure.vertices);};

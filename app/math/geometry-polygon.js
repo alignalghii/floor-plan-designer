@@ -11,7 +11,13 @@ const poly2_degen_cw    = [[ 0, -1], [-2, -1], [ 0,  1], [ 2, -1]];
 const poly2_concave_ccw = [[ 0,  0], [ 2, -1], [ 0,  1], [-2, -1]];
 const poly2_concave_cw  = [[ 0,  0], [-2, -1], [ 0,  1], [ 2, -1]];
 
+function collides(polygon1, polygon2) {return collidesTowards(polygon1, polygon2) || collidesTowards(polygon2, polygon1);}
 
+function collidesTowards(polygon1, polygon2)
+{
+	function orInside(flag, point1) {return flag || inside(point1, polygon2);}
+	return polygon1.reduce(orInside, false);
+}
 
 function asciiGraphics(x0, y0, x1, y1, figure, step = 1, on = '#', off = '.')
 {

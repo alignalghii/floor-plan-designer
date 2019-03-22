@@ -1,3 +1,30 @@
+function testCollides()
+{
+	return	 collides([ [4,-2], [3, 2], [2,-1]], poly1_convex_ccw) &&
+		!collides([ [4,-4], [3, 0], [2,-3]], poly1_convex_ccw) &&
+		 collides([[ 3,-2], [2, 2], [1,-1]], poly1_convex_ccw) &&
+		 collides([[-1, 5], [1, 4], [2, 7]], poly1_convex_ccw) && // OK but out of wrong cause
+		!collides([[ 0, 4], [1, 4], [2, 7]], poly1_convex_ccw) ;  // !!! :(
+}
+
+function testCollidesTowards()
+{
+	return	 collidesTowards([[4,-2], [3,2], [2,-1]], poly1_convex_ccw) &&
+		!collidesTowards(poly1_convex_ccw, [[4,-2], [3,2], [2,-1]]) &&
+
+		!collidesTowards([[4,-4], [3,0], [2,-3]], poly1_convex_ccw) &&
+		!collidesTowards(poly1_convex_ccw, [[4,-4], [3,0], [2,-3]]) &&
+
+		 collidesTowards([[3,-2], [2,2], [1,-1]], poly1_convex_ccw) &&
+		 collidesTowards(poly1_convex_ccw, [[3,-2], [2,2], [1,-1]]) &&
+
+		!collidesTowards([[-1,5], [1,4], [2,7]], poly1_convex_ccw) && // !!! :(
+		 collidesTowards(poly1_convex_ccw, [[-1,5], [1,4], [2,7]]) &&
+
+		!collidesTowards([[ 0,4], [1,4], [2,7]], poly1_convex_ccw) && // !!! :(
+		!collidesTowards(poly1_convex_ccw, [[ 0,4], [1,4], [2,7]]) ;  // !!! :(
+}
+
 function testAsciiGraphics()
 {
 	return asciiGraphics(0, 0, 8, 8, poly1_convex_ccw) == ".........\n" +

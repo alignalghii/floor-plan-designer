@@ -40,9 +40,13 @@ SvgGraphics.prototype.assimilateEventPosition = function (event) {
 	this.svgPoint.x = event.clientX;
 	this.svgPoint.y = event.clientY;
 	var showPoint        = this.svgPoint.matrixTransform(this.svg.getScreenCTM().inverse());
-	var clickDomainPoint = this.svgToDomain([showPoint.x, showPoint.y]);
-	var displacement     = fromTo(this.movingFig.grasp, clickDomainPoint);
-	this.movingFig.doTranslation(displacement);                                     // @TODO procedural
-	this.board.updateFigure(this.id_moving, this.movingFig);                        // @TODO procedural
-	redrawFigure(this.id_moving, this.board, this.domainToSvg, this.svg);
+	var eventDomainPoint = this.svgToDomain([showPoint.x, showPoint.y]);
+	var displacement     = fromTo(this.movingFig.grasp, eventDomainPoint);
+	var futureFig = this.movingFig.translation(displacement);
+	var collision = futureFig.collides(this.standingFig);
+	if (!collision) {
+		this.movingFig.doTranslation(displacement);                                     // @TODO procedural
+		this.board.updateFigure(this.id_moving, this.movingFig);                        // @TODO procedural
+		redrawFigure(this.id_moving, this.board, this.domainToSvg, this.svg);
+	}
 };
