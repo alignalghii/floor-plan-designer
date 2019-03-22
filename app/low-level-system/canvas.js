@@ -11,7 +11,7 @@ function Html5Canvas([canvasWidth, canvasHeight])
 	this.alreadyDrawn       = false;
 }
 
-Html5Canvas.prototype.doCanvas = function ()
+Html5Canvas.prototype.render = function ()
 {
 	this.graphicsHeader.innerHTML = 'Canvas graphics';
 	document.body.appendChild(this.canvasRootElement);
@@ -21,7 +21,7 @@ Html5Canvas.prototype.doCanvas = function ()
 	}
 }
 
-Html5Canvas.prototype.away = function () {deleteElementsWithTagName('canvas');}
+Html5Canvas.prototype.unrender = function () {deleteElementsWithTagName('canvas');}
 
 Html5Canvas.prototype.testGraphics = function ()
 {
