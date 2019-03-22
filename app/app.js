@@ -1,4 +1,4 @@
-var svgSingletonGlobals, html5Canvas;
+var svgGraphics, html5Canvas;
 window.onload = main;
 
 function main(event)
@@ -25,8 +25,8 @@ function main(event)
 
 	/* Dynamic graphics areas */
 	document.addEventListener('click', extendedTests);
-	svgSingletonGlobals = new SvgSingletonGlobals([600, 400], 10); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale);
-	svgSingletonGlobals.render();                             // svg gets rendered
+	svgGraphics = new SvgGraphics([600, 400], 10); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale);
+	svgGraphics.render();                             // svg gets rendered
 	html5Canvas         = new Html5Canvas([1000, 1000]);      // canvas only declared
 }
 
@@ -36,15 +36,15 @@ function extendedTests(event)
 	target = event.target.id;
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
 		case /canvas_button/.test(target):
-			svgSingletonGlobals.unrender();
+			svgGraphics.unrender();
 			html5Canvas.render();
 			break;
 		case /svg_button/.test(target):
 			html5Canvas.unrender();
-			svgSingletonGlobals.render();
+			svgGraphics.render();
 			break;
 		case /screen|fig_.*/.test(target):
-			svgSingletonGlobals.assimilateEventPosition(event);
+			svgGraphics.assimilateEventPosition(event);
 			break;
 	}
 }

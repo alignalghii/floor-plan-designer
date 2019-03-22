@@ -3,7 +3,7 @@
  *******************************/
 
 
-function SvgSingletonGlobals(svgSize, coordsysTransfScale)   // Set/unset always simultaneosly: svg <-> svgPoint <-> ...
+function SvgGraphics(svgSize, coordsysTransfScale)   // Set/unset always simultaneosly: svg <-> svgPoint <-> ...
 {
 	this.svgSize     = svgSize;
 	this.domainToSvg = domainToSvgFactory(svgSize, coordsysTransfScale);
@@ -22,11 +22,11 @@ function SvgSingletonGlobals(svgSize, coordsysTransfScale)   // Set/unset always
 }
 
 
-SvgSingletonGlobals.prototype.unrender = function () {
+SvgGraphics.prototype.unrender = function () {
 	deleteElementsWithTagName('svg');
 };
 
-SvgSingletonGlobals.prototype.render = function () {
+SvgGraphics.prototype.render = function () {
 	this.graphicsHeader.innerHTML = 'SVG graphics';
 	document.body.appendChild(this.svg);
 
@@ -36,7 +36,7 @@ SvgSingletonGlobals.prototype.render = function () {
 	//svg.setAttributeNS(xmlns, 'xmlns:xlink', xlink);
 };
 
-SvgSingletonGlobals.prototype.assimilateEventPosition = function (event) {
+SvgGraphics.prototype.assimilateEventPosition = function (event) {
 	this.svgPoint.x = event.clientX;
 	this.svgPoint.y = event.clientY;
 	var showPoint        = this.svgPoint.matrixTransform(this.svg.getScreenCTM().inverse());
