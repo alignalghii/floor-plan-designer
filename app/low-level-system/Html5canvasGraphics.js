@@ -3,7 +3,7 @@
  *******************************/
 
 
-function Html5Canvas([canvasWidth, canvasHeight])
+function Html5canvasGraphics([canvasWidth, canvasHeight])
 {
 	this.graphicsHeader     = document.getElementById('graphics_header');
 	this.canvasRootElement  = createElementWithAttributes('canvas', {id:'screen', width:canvasWidth, height:canvasHeight});
@@ -11,7 +11,7 @@ function Html5Canvas([canvasWidth, canvasHeight])
 	this.alreadyDrawn       = false;
 }
 
-Html5Canvas.prototype.render = function ()
+Html5canvasGraphics.prototype.render = function ()
 {
 	this.graphicsHeader.innerHTML = 'Canvas graphics';
 	document.body.appendChild(this.canvasRootElement);
@@ -21,9 +21,9 @@ Html5Canvas.prototype.render = function ()
 	}
 }
 
-Html5Canvas.prototype.unrender = function () {deleteElementsWithTagName('canvas');}
+Html5canvasGraphics.prototype.unrender = function () {deleteElementsWithTagName('canvas');}
 
-Html5Canvas.prototype.testGraphics = function ()
+Html5canvasGraphics.prototype.testGraphics = function ()
 {
 	var ctx = this.canvasContext;
 	graphics(ctx,  0,  0, 8,  8, poly1_convex_ccw , 50,   0, 400, "rgb(200,   0, 0)");

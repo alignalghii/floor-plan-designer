@@ -1,4 +1,4 @@
-var svgGraphics, html5Canvas;
+var svgGraphics, html5canvasGraphics;
 window.onload = main;
 
 function main(event)
@@ -25,9 +25,9 @@ function main(event)
 
 	/* Dynamic graphics areas */
 	document.addEventListener('click', extendedTests);
-	svgGraphics = new SvgGraphics([600, 400], 10); // @TODO use it for setting parameters [600, 400], 10 (SVG width and height, and coordinate system transformation scale);
-	svgGraphics.render();                             // svg gets rendered
-	html5Canvas         = new Html5Canvas([1000, 1000]);      // canvas only declared
+	svgGraphics         = new SvgGraphics([600, 400], 10);       //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
+	svgGraphics.render();                                        // svg gets rendered, too
+	html5canvasGraphics = new Html5canvasGraphics([1000, 1000]); // canvas only prepared
 }
 
 
@@ -37,10 +37,10 @@ function extendedTests(event)
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
 		case /canvas_button/.test(target):
 			svgGraphics.unrender();
-			html5Canvas.render();
+			html5canvasGraphics.render();
 			break;
 		case /svg_button/.test(target):
-			html5Canvas.unrender();
+			html5canvasGraphics.unrender();
 			svgGraphics.render();
 			break;
 		case /screen|fig_.*/.test(target):
