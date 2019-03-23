@@ -15,25 +15,23 @@ Figure.prototype.translation = function ([dx, dy])
 {
 	function displace([x,y]) {return [x+dx, y+dy];}  // @TODO curry(pointwise(bPlus))(displacement)
 
-	var objectOut = {}; // @TODO make `testTranslation` stricter, it should fail if this implementation returned a naked literal object instead of a Figure instance with methods
-	var value;
+	var grasp, vertices, svgAttributes = {}; // @TODO make `testTranslation` stricter, it should fail if this implementation returned a naked literal object instead of a Figure instance with methods
 	for (var key in this) {
 		if (this.hasOwnProperty(key)) {
 			switch (key) {
 				case 'grasp':
 					var [x0, y0] = [this.grasp[0], this.grasp[1]];
-					value = [x0+dx, y0+dy];
+					grasp = [x0+dx, y0+dy];
 					break;
 				case 'vertices':
-					value = this.vertices.map(displace);
+					vertices = this.vertices.map(displace);
 					break;
 				default:
-					value = this[key];
+					svgAttributes[key] = this[key];
 			}
-			objectOut[key] = value;
 		}
 	}
-	return new Figure(objectOut.grasp, objectOut.vertices);
+	return new Figure(grasp, vertices, svgAttributes);
 	// @TODO make `testTranslation` stricter, it should fail if this implementation returned a naked literal object instead of a Figure instance with methods
 }
 
