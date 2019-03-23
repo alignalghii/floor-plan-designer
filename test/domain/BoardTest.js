@@ -27,7 +27,8 @@ function testAddFigure()
 						fig_4 : {grasp: [0, 0], vertices: [[10, 0], [12, 0], [11 ,1]], fill: 'green'  }, // another triangle further away
 						fig_6 : {grasp: [0, 0], vertices: [[20, 0], [22, 0], [21 ,1]], fill: 'blue'   }, // a third triangle even further away
 						fig_12: {grasp: [0, 0], vertices: [[-1,-1], [-3,-1], [-2,-2]], fill: 'magenta'}
-					}
+					},
+				focus_id: null
 			}
 	);
 	return flag1 && flag2;
@@ -53,7 +54,8 @@ function testDeleteFigure()
 					{
 						fig_1 : {grasp: [0, 0], vertices: [[ 0, 0], [ 2, 0], [ 1 ,1]], fill: 'red' }, // a triangle
 						fig_6 : {grasp: [0, 0], vertices: [[20, 0], [22, 0], [21 ,1]], fill: 'blue'}  // a third triangle even further away
-					}
+					},
+					focus_id: null
 			}
 	);
 }
@@ -79,7 +81,8 @@ function testUpdateFigure()
 						fig_1 : {grasp: [0, 0], vertices: [[ 0, 0], [ 2, 0], [ 1 ,1]], fill: 'red'    }, // a triangle
 						fig_4 : {grasp: [1, 0], vertices: [[11, 0], [13, 0], [12 ,1]], fill: 'magenta'}, // another triangle further away
 						fig_6 : {grasp: [0, 0], vertices: [[20, 0], [22, 0], [21 ,1]], fill: 'blue'   }  // a third triangle even further away
-					}
+					},
+				focus_id: null
 			}
 	);
 }

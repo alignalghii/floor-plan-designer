@@ -27,6 +27,14 @@ function testFoldl()
 		 foldl(tAndEven, true, [2, 8,  4]) ;
 }
 
+function testEq()
+{
+	return	 eq(   1,    1) &&
+		!eq(   1,    2) &&
+		!eq(   1, null) &&
+		 eq(null, null);
+}
+
 
 function testVecEq()
 {
@@ -42,7 +50,14 @@ function testVecEq()
 		 vecEq([10, 20], [10, 20]) &&
 		!vecEq([10, 20], [20, 10]) &&
 		!vecEq([10, 10], [10    ]) &&
-		!vecEq([10, 10], [20    ]);
+		!vecEq([10, 10], [20    ]) &&
+
+		 vecEq({      }, {      }) &&
+		!vecEq({a:null}, {      }) &&
+		!vecEq({      }, {a:null}) &&
+		 vecEq({a:null}, {a:null}) &&
+		!vecEq({a:null}, {a:   1}) &&
+		!vecEq({a:null}, {b:null}) ;
 }
 
 function testIsPrefixOf()

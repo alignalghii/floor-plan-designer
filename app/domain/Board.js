@@ -3,7 +3,7 @@
  * @TODO: either the pure functional (FP) way, or the pure procedural (in-place) way, but not this mixed style
  *******************************/
 
-function Board(next_id, figures) {this.next_id = next_id; this.figures = figures;}
+function Board(next_id, figures, focus_id = null) {this.next_id = next_id; this.figures = figures; this.focus_id = focus_id;}
 
 const emptyBoard = new Board('fig_1', {}); // @TODO Should it be `Board.prototype.emptyBoard`? Or maybe `Board.emptyBoard`?
 

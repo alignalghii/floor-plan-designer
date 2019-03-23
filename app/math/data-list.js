@@ -2,7 +2,7 @@ function vecEq(u, v) {return isPrefixOf(u, v) && isPrefixOf(v, u);}
 
 function eq(a, b)
 {
-	if (typeof a == 'object' && typeof b == 'object') {
+	if (typeof a == 'object' && a !== null && typeof b == 'object' && b !== null) {
 		return vecEq(a, b);
 	} else {
 		return a == b;
