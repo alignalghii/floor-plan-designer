@@ -3,7 +3,7 @@
  * @TODO: either the pure functional (FP) way, or the pure procedural (in-place) way, but not this mixed style
  *******************************/
 
-function testEmptyBoard() {return vecEq(emptyBoard, {next_id: 'fig_1', figures: {}});}
+function testEmptyBoard() {return vecEq(new Board(), {next_id: 'fig_1', figures: [], focus_id: null});}
 
 /*@TODO procedural*/
 function testAddFigure()

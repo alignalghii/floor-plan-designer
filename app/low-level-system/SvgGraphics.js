@@ -14,7 +14,7 @@ function SvgGraphics(svgSize, coordsysTransfScale)   // Set/unset always simulta
 	var [svgWidth, svgHeight] = this.svgSize;
 	this.svg         = createElementWithAttributes('svg'   , {id:'screen', width:svgWidth, height:svgHeight}, svgNS);
 	this.svgPoint    = this.svg.createSVGPoint();
-	this.board       = emptyBoard;
+	this.board       = new Board(); // initially empty, with next_id:'fig_1', features:{}, focus_id: null
 	this.standingFig = new Figure([0, 0], [[ 2,  3], [ 6,  3], [ 5,  5]          ], {fill: 'red' });
 	this.movingFig   = new Figure([0, 0], [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], {fill: 'blue'});
 	this.id_standing = this.board.addFigure(this.standingFig); // @TODO procedural
