@@ -37,16 +37,27 @@ SvgGraphics.prototype.render = function () {
 };
 
 SvgGraphics.prototype.assimilateEventPosition = function (event) {
+	var fig = this.board.figures[this.board.focus_id];
 	this.svgPoint.x = event.clientX;
 	this.svgPoint.y = event.clientY;
 	var showPoint        = this.svgPoint.matrixTransform(this.svg.getScreenCTM().inverse());
 	var eventDomainPoint = this.svgToDomain([showPoint.x, showPoint.y]);
-	var displacement     = fromTo(this.movingFig.grasp, eventDomainPoint);
-	var futureFig = this.movingFig.translation(displacement);
-	var collision = futureFig.collides(this.standingFig);
+	//console.log(eventDomainPoint[0] + ' ' + eventDomainPoint[1]);
+	var displacement     = fromTo(fig.grasp, eventDomainPoint);
+	var futureFig = fig.translation(displacement);
+	var collision = false;
+	for (var key in this.board.figures) {
+		if (this.board.figures.hasOwnProperty(key) && key != this.board.focus_id) {
+			if (this.board.figures[key].collides(futureFig)) collision = true;
+		}
+	}
+	//var collision = futureFig.collides(this.standingFig);
 	if (!collision) {
-		this.movingFig.doTranslation(displacement);                                     // @TODO procedural
-		this.board.updateFigure(this.id_moving, this.movingFig);                        // @TODO procedural
-		redrawFigure(this.id_moving, this.board, this.domainToSvg, this.svg);
+		fig.doTranslation(displacement);                                     // @TODO procedural
+		//this.board.updateFigure(this.focus_id, fig);                        // @TODO procedural
+		redrawFigure(this.board.focus_id, this.board, this.domainToSvg, this.svg);
+	} else {
+		document.getElementById(this.board.focus_id).style.opacity = null;
+		this.board.focus_id = null;
 	}
 };

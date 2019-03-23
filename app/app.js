@@ -25,14 +25,15 @@ function main(event)
 	target_draw.innerHTML = status_draw ? 'OK' : 'Wrong';
 
 	/* Dynamic graphics areas */
-	document.addEventListener('click', extendedTests);
+	document.addEventListener('click'     , clickHandler    );
+	document.addEventListener('mousemove' , mousemoveHandler);
 	svgGraphics         = new SvgGraphics([600, 400], 25);       //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
 	svgGraphics.render();                                        // svg gets rendered, too
 	html5canvasGraphics = new Html5canvasGraphics([1000, 1000]); // canvas only prepared
 }
 
 
-function extendedTests(event)
+function clickHandler(event)
 {
 	target = event.target.id;
 	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
@@ -44,9 +45,51 @@ function extendedTests(event)
 			html5canvasGraphics.unrender();
 			svgGraphics.render();
 			break;
-		case /screen|fig_.*/.test(target):
-			svgGraphics.assimilateEventPosition(event);
+		case /screen/.test(target):
+			//svgGraphics.assimilateEventPosition(event);
+			var msg = 'G ';
+			var focus_id = svgGraphics.board.focus_id;
+			if (focus_id) {
+				msg += '-' + focus_id;
+				document.getElementById(focus_id).style.opacity = null;
+				focus_id = null;
+			} else {
+				msg += '-0';
+			}
+			svgGraphics.board.focus_id = focus_id;
+			console.log(msg);
 			break;
+		case /fig_.*/.test(target):
+			//svgGraphics.assimilateEventPosition(event);
+			var msg = 'L ';
+			var focus_id = svgGraphics.board.focus_id;
+			if (focus_id) {
+				msg += '-' + focus_id;
+				document.getElementById(focus_id).style.opacity = null;
+				focus_id = null;
+			} else {
+				focus_id = event.target.id;
+				msg += '+' + focus_id;
+				document.getElementById(focus_id).style.opacity = 0.5;
+
+				svgGraphics.svgPoint.x = event.clientX;
+				svgGraphics.svgPoint.y = event.clientY;
+				var showPoint        = svgGraphics.svgPoint.matrixTransform(svgGraphics.svg.getScreenCTM().inverse());
+				var eventDomainPoint = svgGraphics.svgToDomain([showPoint.x, showPoint.y]);
+
+				svgGraphics.board.figures[focus_id].grasp = eventDomainPoint;
+			}
+			svgGraphics.board.focus_id = focus_id;
+			//console.log(msg);
+			break;
+	}
+}
+
+function mousemoveHandler(event)
+{
+	var focus_id = svgGraphics.board.focus_id;
+	if (focus_id) {
+		svgGraphics.assimilateEventPosition(event);
 	}
 }
 
