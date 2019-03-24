@@ -27,7 +27,7 @@ function main(event)
 	/* Dynamic graphics areas */
 	document.addEventListener('click'     , clickHandler    );
 	document.addEventListener('mousemove' , mousemoveHandler);
-	svgGraphics         = new SvgGraphics([600, 400], 25);       //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
+	svgGraphics         = new SvgGraphics([1000, 600], 25);       //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
 	svgGraphics.render();                                        // svg gets rendered, too
 	html5canvasGraphics = new Html5canvasGraphics([1000, 1000]); // canvas only prepared
 }
@@ -57,7 +57,7 @@ function clickHandler(event)
 				msg += '-0';
 			}
 			svgGraphics.board.focus_id = focus_id;
-			console.log(msg);
+			//console.log(msg);
 			break;
 		case /fig_.*/.test(target):
 			//svgGraphics.assimilateEventPosition(event);
