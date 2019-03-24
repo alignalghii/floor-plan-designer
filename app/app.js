@@ -27,7 +27,7 @@ function main(event)
 	/* Dynamic graphics areas */
 	document.addEventListener('click'     , clickHandler    );
 	document.addEventListener('mousemove' , mousemoveHandler);
-	svgGraphics         = new SvgGraphics([1000, 600], 25);       //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
+	svgGraphics         = new SvgGraphics([1000, 600], 25, sampleFigureBank());       //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
 	svgGraphics.render();                                        // svg gets rendered, too
 	html5canvasGraphics = new Html5canvasGraphics([1000, 1000]); // canvas only prepared
 }

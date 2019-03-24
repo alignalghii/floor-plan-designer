@@ -21,6 +21,13 @@ Board.prototype.deleteFigure = function (id, board) {delete this.figures[id];};
 /*@TODO procedural*/
 Board.prototype.updateFigure = function (id, figure, board) {this.figures[id] = figure;}
 
+Board.prototype.appendLoadFrom = function (figureBank)
+{
+	var that = this; function addIt(figure) {that.addFigure(figure);}
+	figureBank.forEach(addIt);
+	// figureBank.forEach((figure) => this.addFigure(figure)); // @TODO it is also good, maybe less portable
+}
+
 
 function figureNum(id) {return parseInt(/.*_(.*)/.exec(id)[1]);}  // @TODO Should it be `Board.prototype.figureNum`? Or maybe `Board.figureNum`?
 function figureId (n ) {return 'fig_' + n;}                       // @TODO Should it be `Board.prototype.figureId` ? Or maybe `Board.figureId` ?

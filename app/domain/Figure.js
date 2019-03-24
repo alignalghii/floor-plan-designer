@@ -2,6 +2,16 @@
  * Geometric transformations (translation, reflection, rotation)
  **************************/
 
+function sampleFigureBank() { return [
+	(new Figure([0, 0], [[ 2,  3], [ 6,  3], [ 5,  5]          ], {fill: 'red' })).translation([-6,5]),
+	(new Figure([0, 0], [[ 1, -1], [ 1,  1], [-1,  1], [-1, -1]], {fill: 'blue'})).translation([-8,-4,]),
+	(new Figure([0, 0], poly1_convex_ccw, {fill: 'magenta'})).translation([-18,0]),
+	(new Figure([0, 0], poly1_concave_ccw, {fill: 'green'})).translation([8,-7]),
+	(new Figure([0, 0], poly2_convex_ccw, {fill: 'black'})).translation([0,-4]),
+	(new Figure([0, 0], poly2_degen_ccw, {fill: 'gray'})).translation([-2.3,-0.7]),
+	(new Figure([0, 0], poly2_concave_ccw, {fill: 'orange'})).translation([-4,2.6])
+];}
+
 function Figure(grasp, vertices, svgAttributes)
 {
 	this.grasp    = grasp;
