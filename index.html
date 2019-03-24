@@ -43,6 +43,14 @@
 	</head>
 	<body>
 		<h1>JavaScript shape editor</h1>
+		<h2>Használat</h2>
+		<p>Az alakzatok mozgathatóak, és képesek érzékelni, ha a mozgatott alakzat valamelyik másikhoz ütközik, ekkor azonnal elveszti a fókuszt és megáll, leválik az egérről.
+		A mozgatás nem vonszolással történik, sőt nem is szabad nyomva tartani az egeret. Hanem rá kell kattintani a mozgatandó alakzatra: ettől az azonnal fókuszba kerül (színe elváltozik, halványabb lesz). A fókuszba került alakzat innentől automatikusan követi az egérkurzort, anélkül, hogy eközben az egér bármely fülét nyomva kéne tartani (nem is szabad).</p>
+		<p>A vonszolás végét a felhasználó azzal jelezheti, hogy újra rákattint az épp vonszolás alatt álló alakzatra: ekkor az alakzat azonnal elveszti a fókuszt, eredeti színe is visszatér, és leválik az gérről, megszűnik követni az egérkurzort. Így a felhasználó újra szabadon tud kiválasztani tetszőleges újabb alakzatot az egérrel.</p>
+		<p>Tömören: adott alakzatra való egérkattintás fókuszállapotot vált: be- illetve kikapcsolja a fókuszt. A fókuszba került alakzat követi az egeret (vonszolás azaz egérgombnyomvatartás nélkül is). Ha nincs fókuszba vett alakzat, akkor persze az egér szabadon, következmény nélkül mozgatható, az alakok nem követik.</p>
+		<p>A fókusz elvesztése, a vonszolás vége nemcsak akkor következik be, ha a felhasználó e szándékát újrakattintással jelzi, hanem ütközéskor is. Ha a felhasználó folytatni akarja a vonszolást, akkor újra fókuszba kell hoznia az alakzatot. Itt picit figyelni kell, mert ilyenkor könnyen újra leesik a fókusz az alakzatról, hiszen ütközési közelségben áll egy másik alakzattal: nehéz meggátolni az újraütközést. Az egeret kicsit meg kell rántani távolodó irányba, és közben rákattintani az elugrasztani szánt alakzatra: elrántani azt attól az alakzattól, amelyhez ütközésig közel áll.</p>
+
+		<h2>Test environment</h2>
 		<ul class="horizontal">
 			<li><span id="canvas_button">Canvas graphics</span></li>
 			<li><span id="svg_button">SVG graphics</span></li>
@@ -59,6 +67,7 @@
 			<tr><td>Draw module test:</td> <td id="result_draw"></td></tr>
 			</table>
 		</ul>
+
 
 		<h2 id="graphics_header">Graphics</h2>
 	</body>
