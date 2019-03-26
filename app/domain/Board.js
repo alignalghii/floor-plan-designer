@@ -3,7 +3,7 @@
  * @TODO: either the pure functional (FP) way, or the pure procedural (in-place) way, but not this mixed style
  *******************************/
 
-function Board(next_id = 'fig_1', figures = [], focus_id = null) {this.next_id = next_id; this.figures = figures; this.focus_id = focus_id;}
+function Board(next_id = 'fig_1', figures = {}, focus_id = null) {this.next_id = next_id; this.figures = figures; this.focus_id = focus_id;}
 
 /*@TODO procedural*/
 Board.prototype.addFigure = function (figure, board)
@@ -26,6 +26,23 @@ Board.prototype.appendLoadFrom = function (figureBank)
 	var that = this; function addIt(figure) {that.addFigure(figure);}
 	figureBank.forEach(addIt);
 	// figureBank.forEach((figure) => this.addFigure(figure)); // @TODO it is also good, maybe less portable
+}
+
+Board.prototype.collidesAny = function (figure)
+{
+	var collision = false;
+	for (var key in this.figures) {
+		if (this.figures.hasOwnProperty(key) && key != this.focus_id) {
+			if (this.figures[key].collides(figure)) {
+				collision = true;
+				break;
+			}
+		}
+	}
+	return collision;
+	// @TODO: works only for arrays, not for assoc arrays = objects
+	//function orCollides (flag, anotherFigure) {return flag || figure.collides(anotherFigure);}
+	//return this.figures.reduce(orCollides, false);
 }
 
 

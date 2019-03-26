@@ -44,13 +44,7 @@ SvgGraphics.prototype.assimilateEventPosition = function (event) {
 	//console.log(eventDomainPoint[0] + ' ' + eventDomainPoint[1]);
 	var displacement     = fromTo(fig.grasp, eventDomainPoint);
 	var futureFig = fig.translation(displacement);
-	var collision = false;
-	for (var key in this.board.figures) {
-		if (this.board.figures.hasOwnProperty(key) && key != this.board.focus_id) {
-			if (this.board.figures[key].collides(futureFig)) collision = true;
-		}
-	}
-	//var collision = futureFig.collides(this.standingFig);
+	var collision = this.board.collidesAny(futureFig);
 	if (!collision) {
 		fig.doTranslation(displacement);                                     // @TODO procedural
 		//this.board.updateFigure(this.focus_id, fig);                        // @TODO procedural

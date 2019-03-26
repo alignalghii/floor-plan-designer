@@ -16,7 +16,7 @@ function main(event)
 		// Board query
 		testSelectByMax() && testSelectByProp() &&
 		// Board algebra
-		testFigureId() && testFigureNum() && testEmptyBoard() && testAddFigure() && testDeleteFigure() && testUpdateFigure() &&
+		testFigureId() && testFigureNum() && testEmptyBoard() && testAddFigure() && testDeleteFigure() && testUpdateFigure() && testAppendLoadFrom() && testCollidesAny()
 		// Geometric transformations (translation, reflection, rotation)
 		testTranslation() && testDoTranslation() &&
 		testFigureCollidesTowards() && testFigureCollides();
