@@ -77,11 +77,17 @@ function testDet()
 
 function testDomainToSvgFactory()
 {
-	return	vecEq(domainToSvgFactory([600, 400], 10)([  0,   0]), [300, 200]) &&
+	var f1=	vecEq(domainToSvgFactory([600, 400], 10)([  0,   0]), [300, 200]) &&
 		vecEq(domainToSvgFactory([600, 400], 10)([  3,   2]), [330, 180]) &&
 		vecEq(domainToSvgFactory([600, 400], 10)([  3,  -2]), [330, 220]) &&
 		vecEq(domainToSvgFactory([600, 400], 10)([ -3,   2]), [270, 180]) &&
 		vecEq(domainToSvgFactory([600, 400], 10)([ -3,  -2]), [270, 220]) ;
+
+	var domainToSvg = domainToSvgFactory([600, 400], 10);
+	var svgVertices = [[2,1], [6,2], [7,5], [5,7], [1,6]].map(domainToSvg);
+	var f2 = vecEq(svgVertices, [[320,190], [360,180], [370,150], [350,130], [310,140]]);
+
+	return f1 && f2;
 }
 
 function testSvgToDomainFactory()

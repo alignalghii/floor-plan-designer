@@ -49,3 +49,9 @@ Board.prototype.collidesAny = function (figure)
 function figureNum(id) {return parseInt(/.*_(.*)/.exec(id)[1]);}  // @TODO Should it be `Board.prototype.figureNum`? Or maybe `Board.figureNum`?
 function figureId (n ) {return 'fig_' + n;}                       // @TODO Should it be `Board.prototype.figureId` ? Or maybe `Board.figureId` ?
 
+Board.prototype.loopOverFigures = function (callback)
+{
+	for (var id in this.figures)
+		if (this.figures.hasOwnProperty(id))
+			callback(id, this.figures[id]);
+}

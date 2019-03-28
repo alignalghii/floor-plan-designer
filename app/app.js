@@ -12,7 +12,7 @@ function main(event)
 		// Coordinate systems transition
 		testDomainToSvgFactory() && testSvgToDomainFactory() &&
 		// Drawing
-		testStringifyPositionWithComma() && testDrawFigureAux() &&
+		testStringifyPositionWithComma() && testPointsArgValue() &&
 		// Board query
 		testSelectByMax() && testSelectByProp() &&
 		// Board algebra
@@ -45,53 +45,12 @@ function clickHandler(event)
 			html5canvasGraphics.unrender();
 			svgGraphics.render();
 			break;
-		case /screen/.test(target):
-			//svgGraphics.assimilateEventPosition(event);
-			var msg = 'G ';
-			var focus_id = svgGraphics.board.focus_id;
-			if (focus_id) {
-				msg += '-' + focus_id;
-				document.getElementById(focus_id).style.opacity = null;
-				focus_id = null;
-			} else {
-				msg += '-0';
-			}
-			svgGraphics.board.focus_id = focus_id;
-			//console.log(msg);
-			break;
-		case /fig_.*/.test(target):
-			//svgGraphics.assimilateEventPosition(event);
-			var msg = 'L ';
-			var focus_id = svgGraphics.board.focus_id;
-			if (focus_id) {
-				msg += '-' + focus_id;
-				document.getElementById(focus_id).style.opacity = null;
-				focus_id = null;
-			} else {
-				focus_id = event.target.id;
-				msg += '+' + focus_id;
-				document.getElementById(focus_id).style.opacity = 0.5;
-
-				svgGraphics.svgPoint.x = event.clientX;
-				svgGraphics.svgPoint.y = event.clientY;
-				var showPoint        = svgGraphics.svgPoint.matrixTransform(svgGraphics.svg.getScreenCTM().inverse());
-				var eventDomainPoint = svgGraphics.svgToDomain([showPoint.x, showPoint.y]);
-
-				svgGraphics.board.figures[focus_id].grasp = eventDomainPoint;
-			}
-			svgGraphics.board.focus_id = focus_id;
-			//console.log(msg);
-			break;
+		case /screen/.test(target): svgGraphics.focusOff()        ; break;
+		case /fig_.*/.test(target): svgGraphics.focusToggle(event); break;
 	}
 }
 
-function mousemoveHandler(event)
-{
-	var focus_id = svgGraphics.board.focus_id;
-	if (focus_id) {
-		svgGraphics.assimilateEventPosition(event);
-	}
-}
+function mousemoveHandler(event) {svgGraphics.assimilateEventPositionOnFocusIfAny(event);}
 
 // @TODO obsolete, unused
 function createGraphics(tagName, id, width, height, namespaceURI = null)

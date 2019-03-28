@@ -55,3 +55,12 @@ Figure.prototype.doTranslation = function ([dx, dy])
 
 Figure.prototype.collidesTowards = function (figure) {return collidesTowards(this.vertices, figure.vertices);};
 Figure.prototype.collides        = function (figure) {return collides       (this.vertices, figure.vertices);};
+
+Figure.prototype.getSvgProperties = function ()
+{
+	var svgProperties = {};
+	for (var key in this)
+		if (this.hasOwnProperty(key) && key != 'vertices' && key != 'id')
+			svgProperties[key] = this[key];
+	return svgProperties;
+}
