@@ -2,16 +2,18 @@ function App()
 {
 	this.svgGraphics         = new SvgGraphics([1000, 600], 25, sampleFigureBank());  //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
 	this.html5canvasGraphics = new Html5canvasGraphics([1000, 1000]);                 // canvas only prepared
-}
 
-App.prototype.run = function (event)
-{
-	// Unit tests:
-	this.runTests();
-	// Event handlers
+	// RAII approach: Subscription to event handlers gets here too, because a corresponding destructor (if needed) could take down these events
 	var that = this;
 	document.addEventListener('click'     , function (event) {that.clickHandler(event);}      ); // `(event) => this.clickHandler(event)`     is nicer but less portable
 	document.addEventListener('mousemove' , function (event) {that.mousemoveHandler(event);}  ); // `(event) => this.mousemoveHandler(event)` is nicer but less portable
+
+}
+
+App.prototype.run = function ()
+{
+	// Unit tests:
+	this.runTests();
 	// Dynamic graphics areas
 	this.svgGraphics.render();                                        // svg gets rendered, too (canvas only prepared)
 };
