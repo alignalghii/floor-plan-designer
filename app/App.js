@@ -1,3 +1,10 @@
+const routes = {
+	'canvas_button': function (event) {this.svgGraphics.unrender();         this.html5canvasGraphics.render();},
+	'svg_button'   : function (event) {this.html5canvasGraphics.unrender(); this.svgGraphics.render();        },
+	'screen'       : function (event) {this.svgGraphics.focusOff();                                           },
+	'fig_.*'       : function (event) {this.svgGraphics.focusToggle(event);                                   }
+};
+
 function App()
 {
 	this.svgGraphics         = new SvgGraphics([1000, 600], 25, sampleFigureBank());  //  [600, 400] is SVG width and height, and 10 is the coordinate system transformation scale;
@@ -5,7 +12,7 @@ function App()
 
 	// RAII approach: Subscription to event handlers gets here too, because a corresponding destructor (if needed) could take down these events
 	var that = this;
-	document.addEventListener('click'     , function (event) {that.clickHandler(event);}      ); // `(event) => this.clickHandler(event)`     is nicer but less portable
+	document.addEventListener('click'     , that.dispatch(routes)                             ); // `(event) => this.clickHandler(event)`     is nicer but less portable
 	document.addEventListener('mousemove' , function (event) {that.mousemoveHandler(event);}  ); // `(event) => this.mousemoveHandler(event)` is nicer but less portable
 }
 
@@ -19,21 +26,24 @@ App.prototype.run = function ()
 };
 
 
-App.prototype.clickHandler = function (event)
+App.prototype.dispatch = function (routes)
 {
-	target = event.target.id;
-	switch (true) { // @TODO credit to Nina Scholz, see [SO](https://stackoverflow.com/a/47281232)
-		case /canvas_button/.test(target):
-			this.svgGraphics.unrender();
-			this.html5canvasGraphics.render();
-			break;
-		case /svg_button/.test(target):
-			this.html5canvasGraphics.unrender();
-			this.svgGraphics.render();
-			break;
-		case /screen/.test(target): this.svgGraphics.focusOff()        ; break;
-		case /fig_.*/.test(target): this.svgGraphics.focusToggle(event); break;
+	var that = this;
+	function router(event)
+	{
+		target = event.target.id;
+		for (var pattern in routes) {
+			if (routes.hasOwnProperty(pattern)) {
+				var regExp = new RegExp(pattern);
+				if (regExp.test(target)) {
+					routes[pattern].call(that, event);
+					break;
+				}
+			}
+		}
 	}
-}
+	return router;
+};
+
 
 App.prototype.mousemoveHandler = function (event) {this.svgGraphics.assimilateEventPositionOnFocusIfAny(event);}
