@@ -37,10 +37,3 @@ App.prototype.clickHandler = function (event)
 }
 
 App.prototype.mousemoveHandler = function (event) {this.svgGraphics.assimilateEventPositionOnFocusIfAny(event);}
-
-// @TODO obsolete, unused
-function createGraphics(tagName, id, width, height, namespaceURI = null)
-{
-	var attrs = {id:id, width:width, height:height};
-	return createElementWithAttributes(tagName, attrs, namespaceURI);
-}
