@@ -1,4 +1,4 @@
-const routes = {
+const clickRoutes = {
 	'canvas_button': function (event) {this.svgGraphics.unrender();         this.html5canvasGraphics.render();},
 	'svg_button'   : function (event) {this.html5canvasGraphics.unrender(); this.svgGraphics.render();        },
 	'screen'       : function (event) {this.svgGraphics.focusOff();                                           },
@@ -11,8 +11,9 @@ function App()
 	this.html5canvasGraphics = new Html5canvasGraphics([1000, 1000]);                 // canvas only prepared
 
 	// RAII approach: Subscription to event handlers gets here too, because a corresponding destructor (if needed) could take down these events
-	var that = this;
-	document.addEventListener('click'     , that.dispatch(routes)                             ); // `(event) => this.clickHandler(event)`     is nicer but less portable
+	var clickRouter = new Router(this, clickRoutes);
+	document.addEventListener('click'     , function (event) {clickRouter.dispatch (event);}  ); // `(event) => clickRouter.dispatch(event)`  is nicer but less portable
+	var that        = this;
 	document.addEventListener('mousemove' , function (event) {that.mousemoveHandler(event);}  ); // `(event) => this.mousemoveHandler(event)` is nicer but less portable
 }
 
@@ -22,28 +23,7 @@ App.prototype.run = function ()
 	var testSuite = new TestSuite();
 	testSuite.run();
 	// Dynamic graphics areas
-	this.svgGraphics.render();                                        // svg gets rendered, too (canvas only prepared)
+	this.svgGraphics.render();  // svg gets rendered (canvas only prepared in constructor)
 };
-
-
-App.prototype.dispatch = function (routes)
-{
-	var that = this;
-	function router(event)
-	{
-		target = event.target.id;
-		for (var pattern in routes) {
-			if (routes.hasOwnProperty(pattern)) {
-				var regExp = new RegExp(pattern);
-				if (regExp.test(target)) {
-					routes[pattern].call(that, event);
-					break;
-				}
-			}
-		}
-	}
-	return router;
-};
-
 
 App.prototype.mousemoveHandler = function (event) {this.svgGraphics.assimilateEventPositionOnFocusIfAny(event);}
