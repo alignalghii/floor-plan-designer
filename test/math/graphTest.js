@@ -1,7 +1,9 @@
-function testGraphTest() {return testStatistics() && testTour() && testRoll();}
+function GraphTest() {}
+
+GraphTest.prototype.run = function() {return this.testStatistics() && this.testTour() && this.testRoll();}
 
 
-function testStatistics()
+GraphTest.prototype.testStatistics = function()
 {
 	function tPer(m, n) {return m/n;}
 	function tMul(m, n) {return m*n;}
@@ -13,7 +15,7 @@ function testStatistics()
 }
 
 
-function testTour()
+GraphTest.prototype.testTour = function()
 {
 	return	vecEq(tour([10, 20, 30]), [[10, 20], [20, 30], [30, 10]]) &&
 		vecEq(tour([10, 20    ]), [[10, 20], [20, 10]          ]) &&
@@ -21,7 +23,7 @@ function testTour()
 		vecEq(tour([          ]), [                            ]);
 }
 
-function testRoll()
+GraphTest.prototype.testRoll = function()
 {
 	return	vecEq(roll([              ]), [              ]) &&
 		vecEq(roll([10            ]), [10            ]) &&
@@ -29,4 +31,3 @@ function testRoll()
 		vecEq(roll([10, 20, 30    ]), [30, 10, 20    ]) &&
 		vecEq(roll([10, 20, 30, 40]), [40, 10, 20, 30]);
 }
-

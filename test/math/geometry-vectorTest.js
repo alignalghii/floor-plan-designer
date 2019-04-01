@@ -1,9 +1,11 @@
-function testGeometryVectorTest() {return testFromTo() && testScalarProduct() && testVectorLength() && testSignedRotAngleOfVectors() && testAngleOfVectors() && testDet() && testDomainToSvgFactory() && testSvgToDomainFactory();}
+function GeometryVectorTest() {}
+
+GeometryVectorTest.prototype.run = function() {return this.testFromTo() && this.testScalarProduct() && this.testVectorLength() && this.testSignedRotAngleOfVectors() && this.testAngleOfVectors() && this.testDet() && this.testDomainToSvgFactory() && this.testSvgToDomainFactory();}
 
 
-function testFromTo() {return vecEq(fromTo([3, 7], [5, 12]), [2, 5]);}
+GeometryVectorTest.prototype.testFromTo = function() {return vecEq(fromTo([3, 7], [5, 12]), [2, 5]);}
 
-function testScalarProduct()
+GeometryVectorTest.prototype.testScalarProduct = function()
 {
 	return	scalarProduct([ 0,  0], [ 2,  3]) ==  0 &&
 		scalarProduct([ 2,  5], [ 7,  3]) == 29 &&
@@ -11,7 +13,7 @@ function testScalarProduct()
 		scalarProduct([ 2,  5], [ 7, -3]) == -1;
 }
 
-function testVectorLength()
+GeometryVectorTest.prototype.testVectorLength = function()
 {
 	return	vectorLength([0 ,  0]) == 0 &&
 		vectorLength([0 ,  6]) == 6 &&
@@ -24,7 +26,7 @@ function testVectorLength()
 		vectorLength([-3, -4]) == 5 ;
 }
 
-function testSignedRotAngleOfVectors()
+GeometryVectorTest.prototype.testSignedRotAngleOfVectors = function()
 {
 	return	cca(signedRotAngleOfVectors([ 1,  0], [ 0,  1]),  90) &&
 		cca(signedRotAngleOfVectors([ 1,  0], [ 1,  1]),  45) &&
@@ -38,7 +40,7 @@ function testSignedRotAngleOfVectors()
 		cca(signedRotAngleOfVectors([ 2,  3], [-4, -6]), 180) ;
 }
 
-function testAngleOfVectors()
+GeometryVectorTest.prototype.testAngleOfVectors = function()
 {
 	return	cca(angleOfVectors([ 1,  0], [ 0,  1]),  90) &&
 		cca(angleOfVectors([ 1,  0], [ 1,  1]),  45) &&
@@ -52,7 +54,7 @@ function testAngleOfVectors()
 		cca(angleOfVectors([ 2,  3], [-4, -6]), 180) ; // a naive implementation provides `NaN` through `acos(-1.0000...2)`
 }
 
-function testDet()
+GeometryVectorTest.prototype.testDet = function()
 {
 	return	det([ 2,  1], [ 2,  1]) == 0 &&
 		det([ 2,  1], [ 1,  1]) >  0 &&
@@ -78,7 +80,7 @@ function testDet()
  * Transition between coordinate sytems:
  ******************************/
 
-function testDomainToSvgFactory()
+GeometryVectorTest.prototype.testDomainToSvgFactory = function()
 {
 	var f1=	vecEq(domainToSvgFactory([600, 400], 10)([  0,   0]), [300, 200]) &&
 		vecEq(domainToSvgFactory([600, 400], 10)([  3,   2]), [330, 180]) &&
@@ -93,7 +95,7 @@ function testDomainToSvgFactory()
 	return f1 && f2;
 }
 
-function testSvgToDomainFactory()
+GeometryVectorTest.prototype.testSvgToDomainFactory = function()
 {
 	return	vecEq(svgToDomainFactory([600, 400], 10)([300, 200]), [ 0,  0]) &&
 		vecEq(svgToDomainFactory([600, 400], 10)([330, 180]), [ 3,  2]) &&

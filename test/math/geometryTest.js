@@ -1,7 +1,9 @@
-function testGeometryTest() {return testAreConvex() && testIsConvex() && testAngleMod() && testLineSide() && testEdgeVector() && testAreConvexVectors() && testAreConcaveVectors();}
+function GeometryTest() {}
+
+GeometryTest.prototype.run = function() {return this.testAreConvex() && this.testIsConvex() && this.testAngleMod() && this.testLineSide() && this.testEdgeVector() && this.testAreConvexVectors() && this.testAreConcaveVectors();}
 
 
-function testAreConvex()
+GeometryTest.prototype.testAreConvex = function()
 {
 	return	!areConvex(   0,  350) &&
 		!areConvex(   0, - 10) &&
@@ -14,7 +16,7 @@ function testAreConvex()
 		 areConvex(-360,  360) ;
 }
 
-function testIsConvex() // the case of == 180 is unspecified behavior
+GeometryTest.prototype.testIsConvex = function() // the case of == 180 is unspecified behavior
 {
 	return	 isConvex(    0) &&
 		 isConvex(   10) &&
@@ -38,7 +40,7 @@ function testIsConvex() // the case of == 180 is unspecified behavior
 		!isConvex(- 730) ;
 }
 
-function testAngleMod()
+GeometryTest.prototype.testAngleMod = function()
 {
 	return	angleMod(    0) ==   0 &&
 		angleMod(   10) ==  10 &&
@@ -67,7 +69,7 @@ function testAngleMod()
 
 
 
-function testLineSide()
+GeometryTest.prototype.testLineSide = function()
 {
 	return	lineSide([5, 4], [3, 2], [-2, -2]) <  0 &&
 		lineSide([5, 4], [3, 2], [-1, -2]) <  0 &&
@@ -152,7 +154,7 @@ function testLineSide()
 
 
 
-function testEdgeVector()
+GeometryTest.prototype.testEdgeVector = function()
 {
 	return	 vecEq(edgeVector([[-2, -2], [ 4, -1]]), [ 6,  1]) &&
 		 vecEq(edgeVector([[ 4, -1], [ 7,  2]]), [ 3,  3]) &&
@@ -162,7 +164,7 @@ function testEdgeVector()
 		 vecEq(edgeVector([[ 1,  4], [ 4,  6]]), [ 3,  2]) ;
 }
 
-function testAreConvexVectors()
+GeometryTest.prototype.testAreConvexVectors = function()
 {
 	return	true && //areConvexVectors([ 2,  1], [ 2,  1]) is unspecified
 		 areConvexVectors([ 2,  1], [ 1,  1]) &&
@@ -182,7 +184,7 @@ function testAreConvexVectors()
 		!areConvexVectors([ 2,  1], [ 2,  0]);
 }
 
-function testAreConcaveVectors()
+GeometryTest.prototype.testAreConcaveVectors = function()
 {
 	return	true && //areConcaveVectors([ 2,  1], [ 2,  1]) is unspecified
 		!areConcaveVectors([ 2,  1], [ 1,  1]) &&

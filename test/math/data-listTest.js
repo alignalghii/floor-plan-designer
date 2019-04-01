@@ -1,14 +1,16 @@
-function testDataListTest() {return testUncurry() && testFoldl() && testEq() && testVecEq() && testIsPrefixOf() && testDepth() && testSame() && testSum() && testPointwise() && testAnd() && testOr();}
+function DataListTest() {}
+
+DataListTest.prototype.run = function() {return this.testUncurry() && this.testFoldl() && this.testEq() && this.testVecEq() && this.testIsPrefixOf() && this.testDepth() && this.testSame() && this.testSum() && this.testPointwise() && this.testAnd() && this.testOr();}
 
 
-function testUncurry()
+DataListTest.prototype.testUncurry = function()
 {
 	var uncurriedPlus = uncurry(bPlus);
 	return	uncurriedPlus([5, 7]) == 12 &&
 		uncurriedPlus([3, 8]) == 11 ;
 }
 
-function testFoldl()
+DataListTest.prototype.testFoldl = function()
 {
 	function tAndEven(p, x) {return p       && (x%2==0);}
 	function tOrEven (s, x) {return s       || (x%2==0);}
@@ -30,7 +32,7 @@ function testFoldl()
 		 foldl(tAndEven, true, [2, 8,  4]) ;
 }
 
-function testEq()
+DataListTest.prototype.testEq = function()
 {
 	return	 eq(   1,    1) &&
 		!eq(   1,    2) &&
@@ -39,7 +41,7 @@ function testEq()
 }
 
 
-function testVecEq()
+DataListTest.prototype.testVecEq = function()
 {
 	return	 vecEq([      ], [      ]) &&
 		!vecEq([      ], [10    ]) &&
@@ -63,7 +65,7 @@ function testVecEq()
 		!vecEq({a:null}, {b:null}) ;
 }
 
-function testIsPrefixOf()
+DataListTest.prototype.testIsPrefixOf = function()
 {
 	return	 isPrefixOf([      ], [      ]) &&
 		 isPrefixOf([      ], [10    ]) &&
@@ -80,7 +82,7 @@ function testIsPrefixOf()
 		!isPrefixOf([10, 10], [20    ]);
 }
 
-function testDepth()
+DataListTest.prototype.testDepth = function()
 {
 	return	depth(12  ) == 0 &&
 		depth([  ]) == 1 && depth([12, 16]) == 1 &&
@@ -88,7 +90,7 @@ function testDepth()
 }
 
 
-function testSame()
+DataListTest.prototype.testSame = function()
 {
 	return   same([]) &&
 		 same([false]) &&
@@ -107,7 +109,7 @@ function testSame()
 		 same([true, true, true]);
 }
 
-function testSum()
+DataListTest.prototype.testSum = function()
 {
 	return	sum([         ]) ==  0 &&
 		sum([45       ]) == 45 &&
@@ -115,12 +117,12 @@ function testSum()
 		sum([ 5, 3, 12]) == 20;
 }
 
-function testPointwise()
+DataListTest.prototype.testPointwise = function()
 {
 	return	vecEq(pointwise(bPlus)([2, 3, 5], [7, 11, 13]), [9, 14, 18]);
 }
 
-function testAnd()
+DataListTest.prototype.testAnd = function()
 {
 	return  lAnd([]) &&
 		!lAnd([false]) &&
@@ -140,7 +142,7 @@ function testAnd()
 }
 
 
-function testOr()
+DataListTest.prototype.testOr = function()
 {
 	return  !lOr([]) &&
 		!lOr([false]) &&

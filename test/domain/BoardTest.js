@@ -3,13 +3,15 @@
  * @TODO: either the pure functional (FP) way, or the pure procedural (in-place) way, but not this mixed style
  *******************************/
 
-function testBoardTest() {return testEmptyBoard() && testAddFigure() && testDeleteFigure() && testUpdateFigure() && testAppendLoadFrom() && testCollidesAny() && testFigureId() && testFigureNum();}
+function BoardTest() {}
+
+BoardTest.prototype.run = function() {return this.testEmptyBoard() && this.testAddFigure() && this.testDeleteFigure() && this.testUpdateFigure() && this.testAppendLoadFrom() && this.testCollidesAny() && this.testFigureId() && this.testFigureNum();}
 
 
-function testEmptyBoard() {return vecEq(new Board(), {next_id: 'fig_1', figures: [], focus_id: null});}
+BoardTest.prototype.testEmptyBoard = function() {return vecEq(new Board(), {next_id: 'fig_1', figures: [], focus_id: null});}
 
 /*@TODO procedural*/
-function testAddFigure()
+BoardTest.prototype.testAddFigure = function()
 {
 	var board = new Board(
 		'fig_12',
@@ -38,7 +40,7 @@ function testAddFigure()
 }
 
 /*@TODO procedural*/
-function testDeleteFigure()
+BoardTest.prototype.testDeleteFigure = function()
 {
 	var board = new Board(
 		'fig_12',
@@ -64,7 +66,7 @@ function testDeleteFigure()
 }
 
 /*@TODO procedural*/
-function testUpdateFigure()
+BoardTest.prototype.testUpdateFigure = function()
 {
 	var board = new Board(
 		'fig_12',
@@ -90,7 +92,7 @@ function testUpdateFigure()
 	);
 }
 
-function testAppendLoadFrom()
+BoardTest.prototype.testAppendLoadFrom = function()
 {
 	var board = new Board(
 		'fig_12',
@@ -126,7 +128,7 @@ function testAppendLoadFrom()
 
 }
 
-function testCollidesAny()
+BoardTest.prototype.testCollidesAny = function()
 {
 	var board1 = new Board();
 	var figure11 = new Figure([0, 0], [[100, 100], [102, 100], [101, 101]]);
@@ -141,12 +143,12 @@ function testCollidesAny()
 	return flag1;
 }
 
-function testFigureId()
+BoardTest.prototype.testFigureId = function()
 {
 	return	figureId(3) == 'fig_3';
 }
 
-function testFigureNum()
+BoardTest.prototype.testFigureNum = function()
 {
 	return	figureNum('fig_3') == 3;
 }

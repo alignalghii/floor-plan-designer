@@ -2,10 +2,12 @@
  * Geometric transformations (translation, reflection, rotation)
  **************************/
 
-function testFigureTest() {return testFigureCollides() && testFigureCollidesTowards() && testDoTranslation() && testTranslation();}
+function FigureTest() {}
+
+FigureTest.prototype.run = function() {return this.testFigureCollides() && this.testFigureCollidesTowards() && this.testDoTranslation() && this.testTranslation();}
 
 
-function testFigureCollides()
+FigureTest.prototype.testFigureCollides = function()
 {
 	var figure1_convex_ccv = new Figure([0,0], poly1_convex_ccw);
 
@@ -22,7 +24,7 @@ function testFigureCollides()
 		!aFigure5.collides(figure1_convex_ccv) ;  // !!! :(
 }
 
-function testFigureCollidesTowards()
+FigureTest.prototype.testFigureCollidesTowards = function()
 {
 	var figure1_convex_ccv = new Figure([0,0], poly1_convex_ccw);
 
@@ -48,7 +50,7 @@ function testFigureCollidesTowards()
 		!figure1_convex_ccv.collidesTowards(aFigure5          ) ;  // !!! :(
 }
 
-function testDoTranslation()
+FigureTest.prototype.testDoTranslation = function()
 {
 	var figure      = new Figure([0, 0], [[2, 1], [6, 2], [7, 5], [5, 7], [1, 6]], {fill: 'red'});
 	// var expectedFig = new Figure( ... @TODO methods should be compared too. See test/domain/FigureTest::translation TODO
@@ -56,7 +58,7 @@ function testDoTranslation()
 	return vecEq(figure, {grasp: [3, 2], vertices: [[5, 3], [9, 4], [10, 7], [8, 9], [4, 8]], fill: 'red'});
 }
 
-function testTranslation()
+FigureTest.prototype.testTranslation = function()
 {
 	var figure1 = new Figure([0, 0], [[2, 1], [6, 2], [7, 5], [5, 7], [1, 6]], {fill: 'red'});
 	var figure2 = figure1.translation([3, 2]);

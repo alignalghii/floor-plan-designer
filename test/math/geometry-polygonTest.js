@@ -1,7 +1,9 @@
-function testGeometryPolygonTest() {return testCollides() && testCollidesTowards() && testAsciiGraphics() && testInside_series_convex_ccw() && testInside_series_convex_cw() && testInside_series_degen_ccw() && testInside_series_degen_cw() && testInside_series_concave_ccw() && testInside_series_concave_cw() && testInside_convex_ccw() && testInside_convex_cw() && testInside_concave_ccw() && testInside_concave_cw() && testSignedRotAngleSumWhenToured() && testAngleSumWhenToured() && testAngleTyper_dependent() && testAngleTyper() && testExecuteTree() && testSubsequencerRolled() && testSubsequencer() && testRollToJoin() && testAreConvexDirectedEdges() && testAreConcaveDirectedEdges() && testAngleOfEdges() && testSectionSide();}
+function GeometryPolygonTest() {}
+
+GeometryPolygonTest.prototype.run = function() {return this.testCollides() && this.testCollidesTowards() && this.testAsciiGraphics() && this.testInside_series_convex_ccw() && this.testInside_series_convex_cw() && this.testInside_series_degen_ccw() && this.testInside_series_degen_cw() && this.testInside_series_concave_ccw() && this.testInside_series_concave_cw() && this.testInside_convex_ccw() && this.testInside_convex_cw() && this.testInside_concave_ccw() && this.testInside_concave_cw() && this.testSignedRotAngleSumWhenToured() && this.testAngleSumWhenToured() && this.testAngleTyper_dependent() && this.testAngleTyper() && this.testExecuteTree() && this.testSubsequencerRolled() && this.testSubsequencer() && this.testRollToJoin() && this.testAreConvexDirectedEdges() && this.testAreConcaveDirectedEdges() && this.testAngleOfEdges() && this.testSectionSide();}
 
 
-function testCollides()
+GeometryPolygonTest.prototype.testCollides = function()
 {
 	return	 collides([ [4,-2], [3, 2], [2,-1]], poly1_convex_ccw) &&
 		!collides([ [4,-4], [3, 0], [2,-3]], poly1_convex_ccw) &&
@@ -10,7 +12,7 @@ function testCollides()
 		!collides([[ 0, 4], [1, 4], [2, 7]], poly1_convex_ccw) ;  // !!! :(
 }
 
-function testCollidesTowards()
+GeometryPolygonTest.prototype.testCollidesTowards = function()
 {
 	return	 collidesTowards([[4,-2], [3,2], [2,-1]], poly1_convex_ccw) &&
 		!collidesTowards(poly1_convex_ccw, [[4,-2], [3,2], [2,-1]]) &&
@@ -28,7 +30,7 @@ function testCollidesTowards()
 		!collidesTowards(poly1_convex_ccw, [[ 0,4], [1,4], [2,7]]) ;  // !!! :(
 }
 
-function testAsciiGraphics()
+GeometryPolygonTest.prototype.testAsciiGraphics = function()
 {
 	return asciiGraphics(0, 0, 8, 8, poly1_convex_ccw) == ".........\n" +
 	                                                      ".....#...\n" +
@@ -42,7 +44,7 @@ function testAsciiGraphics()
 }
 
 
-function testInside_series_convex_ccw()
+GeometryPolygonTest.prototype.testInside_series_convex_ccw = function()
 {
 	return	!inside([ -3,  -3], poly2_convex_ccw) &&
 		!inside([ -2,  -3], poly2_convex_ccw) &&
@@ -94,7 +96,7 @@ function testInside_series_convex_ccw()
 }
 
 
-function testInside_series_convex_cw()
+GeometryPolygonTest.prototype.testInside_series_convex_cw = function()
 {
 	return	!inside([ -3,  -3], poly2_convex_cw) &&
 		!inside([ -2,  -3], poly2_convex_cw) &&
@@ -146,7 +148,7 @@ function testInside_series_convex_cw()
 }
 
 
-function testInside_series_degen_ccw()
+GeometryPolygonTest.prototype.testInside_series_degen_ccw = function()
 {
 	return	!inside([ -3,  -3], poly2_degen_ccw) &&
 		!inside([ -2,  -3], poly2_degen_ccw) &&
@@ -197,7 +199,7 @@ function testInside_series_degen_ccw()
 		!inside([  3,   2], poly2_degen_ccw) ;
 }
 
-function testInside_series_degen_cw()
+GeometryPolygonTest.prototype.testInside_series_degen_cw = function()
 {
 	return	!inside([ -3,  -3], poly2_degen_cw) &&
 		!inside([ -2,  -3], poly2_degen_cw) &&
@@ -249,7 +251,7 @@ function testInside_series_degen_cw()
 }
 
 
-function testInside_series_concave_ccw()
+GeometryPolygonTest.prototype.testInside_series_concave_ccw = function()
 {
 	return	!inside([ -3,  -3], poly2_concave_ccw) &&
 		!inside([ -2,  -3], poly2_concave_ccw) &&
@@ -301,7 +303,7 @@ function testInside_series_concave_ccw()
 }
 
 
-function testInside_series_concave_cw()
+GeometryPolygonTest.prototype.testInside_series_concave_cw = function()
 {
 	return	!inside([ -3,  -3], poly2_concave_cw) &&
 		!inside([ -2,  -3], poly2_concave_cw) &&
@@ -353,7 +355,7 @@ function testInside_series_concave_cw()
 }
 
 
-function testInside_convex_ccw()
+GeometryPolygonTest.prototype.testInside_convex_ccw = function()
 {
 	return  !inside([0, 0], poly1_convex_ccw) &&
 		!inside([1, 0], poly1_convex_ccw) &&
@@ -446,7 +448,7 @@ function testInside_convex_ccw()
 		!inside([8, 8], poly1_convex_ccw);
 }
 
-function testInside_convex_cw()
+GeometryPolygonTest.prototype.testInside_convex_cw = function()
 {
 	return  !inside([0, 0], poly1_convex_cw) &&
 		!inside([1, 0], poly1_convex_cw) &&
@@ -539,7 +541,7 @@ function testInside_convex_cw()
 		!inside([8, 8], poly1_convex_cw) ;
 }
 
-function testInside_concave_ccw()
+GeometryPolygonTest.prototype.testInside_concave_ccw = function()
 {
 	return	!inside([ -4,  -3], poly1_concave_ccw) &&
 		!inside([ -3,  -3], poly1_concave_ccw) &&
@@ -738,7 +740,7 @@ function testInside_concave_ccw()
 		!inside([  8,  10], poly1_concave_ccw) ;
 }
 
-function testInside_concave_cw()
+GeometryPolygonTest.prototype.testInside_concave_cw = function()
 {
 	return	!inside([ -4,  -3], poly1_concave_cw) &&
 		!inside([ -3,  -3], poly1_concave_cw) &&
@@ -938,20 +940,20 @@ function testInside_concave_cw()
 }
 
 
-function testSignedRotAngleSumWhenToured()
+GeometryPolygonTest.prototype.testSignedRotAngleSumWhenToured = function()
 {
 	return	cca(signedRotAngleSumWhenToured([[0, 0], [2, 1], [0, 4]]),  360) &&
 		cca(signedRotAngleSumWhenToured([[0, 0], [0, 4], [2, 1]]), -360) ;
 }
 
-function testAngleSumWhenToured()
+GeometryPolygonTest.prototype.testAngleSumWhenToured = function()
 {
 	return	cca(angleSumWhenToured([[0, 0], [2, 1], [0, 4]]), 360) &&
 		cca(angleSumWhenToured([[0, 0], [0, 4], [2, 1]]), 360) ;
 }
 
 
-function testAngleTyper_dependent()
+GeometryPolygonTest.prototype.testAngleTyper_dependent = function()
 {
 	function tPlus10(a) {return a + 10;}
 	function tLeq (a, b) {return a <= b;}
@@ -984,7 +986,7 @@ function testAngleTyper_dependent()
 		!angleTyper(subsequencerRolled([-31, 136, 226,  31], areConvex), tIsEven, true, tAnd, tOr   )  ;
 }
 
-function testAngleTyper()
+GeometryPolygonTest.prototype.testAngleTyper = function()
 {
 	function tPlus10(a)  {return a + 10;}
 	function tLeq (a, b) {return a <= b;}
@@ -1019,7 +1021,7 @@ function testAngleTyper()
 }
 
 
-function testExecuteTree()
+GeometryPolygonTest.prototype.testExecuteTree = function()
 {
 	function tPlus   (s, x) {return s       +  x       ;}
 	function tMult   (p, x) {return p       *  x       ;}
@@ -1046,7 +1048,7 @@ function testExecuteTree()
 }
 
 
-function testSubsequencerRolled()
+GeometryPolygonTest.prototype.testSubsequencerRolled = function()
 {
 	function tLeq (a, b) {return a <= b;}
 	return	vecEq(subsequencerRolled([                                         ], tLeq     ), [                                                                                 ]) &&
@@ -1059,7 +1061,7 @@ function testSubsequencerRolled()
 		vecEq(subsequencerRolled([330, 135, 225,  30                       ], areConvex), [ {sub:[30, 330]},        {val:135}, {val:225}                                    ]) ;
 }
 
-function testSubsequencer()
+GeometryPolygonTest.prototype.testSubsequencer = function()
 {
 	function tLeq (a, b) {return a <= b;}
 	return	vecEq(subsequencer([                                         ], tLeq), [                                                                                 ]) &&
@@ -1071,7 +1073,7 @@ function testSubsequencer()
 		vecEq(subsequencer([ 10,  20,  30,  28,      35,  23,  12, 55], tLeq), [  {val:10},   {val:20},  {sub:[30, 28]},            {sub:[35, 23, 12]},  {val:55}]) ;
 }
 
-function testRollToJoin()
+GeometryPolygonTest.prototype.testRollToJoin = function()
 {
 	function tLeq  (a,b){return a <= b;}
 	function tNever(a,b){return false;}
@@ -1084,7 +1086,7 @@ function testRollToJoin()
 }
 
 
-function testAreConvexDirectedEdges()
+GeometryPolygonTest.prototype.testAreConvexDirectedEdges = function()
 {
 	return	 areConvexDirectedEdges([[-2, -2], [ 4, -1]], [[ 4, -1], [ 7,  2]]) &&
 		 areConvexDirectedEdges([[ 4, -1], [ 7,  2]], [[ 7,  2], [ 5,  2]]) &&
@@ -1099,7 +1101,7 @@ function testAreConvexDirectedEdges()
 		 areConvexDirectedEdges([[-1,  1], [-2, -2]], [[-2, -2], [ 4, -1]]) ;
 }
 
-function testAreConcaveDirectedEdges()
+GeometryPolygonTest.prototype.testAreConcaveDirectedEdges = function()
 {
 	return	!areConcaveDirectedEdges([[-2, -2], [ 4, -1]], [[ 4, -1], [ 7,  2]]) &&
 		!areConcaveDirectedEdges([[ 4, -1], [ 7,  2]], [[ 7,  2], [ 5,  2]]) &&
@@ -1114,7 +1116,7 @@ function testAreConcaveDirectedEdges()
 		!areConcaveDirectedEdges([[-1,  1], [-2, -2]], [[-2, -2], [ 4, -1]]) ;
 }
 
-function testAngleOfEdges()
+GeometryPolygonTest.prototype.testAngleOfEdges = function()
 {
 	return	angleOfEdges([[1, 2], [1, 3]], [[5, 7], [5, 12]]) ==   0 &&
 		angleOfEdges([[2, 1], [2, 3]], [[5, 7], [5, 12]]) ==   0 &&
@@ -1127,7 +1129,7 @@ function testAngleOfEdges()
 
 
 
-function testSectionSide()
+GeometryPolygonTest.prototype.testSectionSide = function()
 {
 	return	sectionSide([5, 4], [8, 6], [-2, -2]) <  0 &&
 		sectionSide([5, 4], [8, 6], [-1, -2]) <  0 &&
