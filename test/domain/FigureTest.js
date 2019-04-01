@@ -2,6 +2,9 @@
  * Geometric transformations (translation, reflection, rotation)
  **************************/
 
+function testFigureTest() {return testFigureCollides() && testFigureCollidesTowards() && testDoTranslation() && testTranslation();}
+
+
 function testFigureCollides()
 {
 	var figure1_convex_ccv = new Figure([0,0], poly1_convex_ccw);

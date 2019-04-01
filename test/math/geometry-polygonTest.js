@@ -1,3 +1,6 @@
+function testGeometryPolygonTest() {return testCollides() && testCollidesTowards() && testAsciiGraphics() && testInside_series_convex_ccw() && testInside_series_convex_cw() && testInside_series_degen_ccw() && testInside_series_degen_cw() && testInside_series_concave_ccw() && testInside_series_concave_cw() && testInside_convex_ccw() && testInside_convex_cw() && testInside_concave_ccw() && testInside_concave_cw() && testSignedRotAngleSumWhenToured() && testAngleSumWhenToured() && testAngleTyper_dependent() && testAngleTyper() && testExecuteTree() && testSubsequencerRolled() && testSubsequencer() && testRollToJoin() && testAreConvexDirectedEdges() && testAreConcaveDirectedEdges() && testAngleOfEdges() && testSectionSide();}
+
+
 function testCollides()
 {
 	return	 collides([ [4,-2], [3, 2], [2,-1]], poly1_convex_ccw) &&

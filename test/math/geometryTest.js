@@ -1,3 +1,6 @@
+function testGeometryTest() {return testAreConvex() && testIsConvex() && testAngleMod() && testLineSide() && testEdgeVector() && testAreConvexVectors() && testAreConcaveVectors();}
+
+
 function testAreConvex()
 {
 	return	!areConvex(   0,  350) &&

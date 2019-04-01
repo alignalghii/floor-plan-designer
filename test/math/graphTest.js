@@ -1,3 +1,6 @@
+function testGraphTest() {return testStatistics() && testTour() && testRoll();}
+
+
 function testStatistics()
 {
 	function tPer(m, n) {return m/n;}

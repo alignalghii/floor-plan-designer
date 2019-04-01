@@ -1,3 +1,6 @@
+function testGeometryVectorTest() {return testFromTo() && testScalarProduct() && testVectorLength() && testSignedRotAngleOfVectors() && testAngleOfVectors() && testDet() && testDomainToSvgFactory() && testSvgToDomainFactory();}
+
+
 function testFromTo() {return vecEq(fromTo([3, 7], [5, 12]), [2, 5]);}
 
 function testScalarProduct()

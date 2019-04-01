@@ -2,6 +2,9 @@
  * Query the Board: Abstract modeling of events, and enabling acting both on abstract representation with concrete SVG level
  *******************************/
 
+function testDataHashTest() {return testSelectByMax() && testSelectByProp();}
+
+
 function testSelectByMax() // nearness, approaching, sticking
 {
 	function sumOfSumOfCoordPairs(figure) {return sum(figure.vertices.map(sum));}

@@ -1,3 +1,6 @@
+function testDataListTest() {return testUncurry() && testFoldl() && testEq() && testVecEq() && testIsPrefixOf() && testDepth() && testSame() && testSum() && testPointwise() && testAnd() && testOr();}
+
+
 function testUncurry()
 {
 	var uncurriedPlus = uncurry(bPlus);
