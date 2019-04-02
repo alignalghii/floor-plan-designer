@@ -20,8 +20,8 @@ function App()
 App.prototype.run = function ()
 {
 	// Unit tests:
-	var testSuite = new TestSuite();
-	testSuite.run();
+	var testRunner = new TestRunner(testModulesListGenerableByConsole());
+	testRunner.run();
 	// Dynamic graphics areas
 	this.svgGraphics.render();  // svg gets rendered (canvas only prepared in constructor)
 };

@@ -1,0 +1,35 @@
+[
+	{id: "math", modules: [GeometryPolygonTest, GeometryTest, GeometryVectorTest, DataHashTest, DataListTest, GraphTest]},
+	{id: "domain", modules: [BoardTest, FigureTest]},
+	{id: "low-level-system", modules: [SvgLowLevelTest]}
+];
+
+		<script src="app/App.js"></script>
+		<script src="app/domain/Board.js"></script>
+		<script src="app/domain/collision.js"></script>
+		<script src="app/domain/Figure.js"></script>
+		<script src="app/low-level-system/DOM-manipulation.js"></script>
+		<script src="app/low-level-system/Html5canvasGraphics.js"></script>
+		<script src="app/low-level-system/SvgGraphics.js"></script>
+		<script src="app/low-level-system/SvgLowLevel.js"></script>
+		<script src="app/math/data-hash.js"></script>
+		<script src="app/math/data-list.js"></script>
+		<script src="app/math/geometry.js"></script>
+		<script src="app/math/geometry-polygon.js"></script>
+		<script src="app/math/geometry-vector.js"></script>
+		<script src="app/math/graph.js"></script>
+		<script src="app/math/math.js"></script>
+		<script src="app/Router.js"></script>
+		<script src="config/testModulesListGenerableByConsole.js"></script>
+		<script src="init.js"></script>
+		<script src="test/domain/BoardTest.js"></script>
+		<script src="test/domain/FigureTest.js"></script>
+		<script src="test/low-level-system/SvgLowLevelTest.js"></script>
+		<script src="test/math/data-hashTest.js"></script>
+		<script src="test/math/data-listTest.js"></script>
+		<script src="test/math/geometry-polygonTest.js"></script>
+		<script src="test/math/geometryTest.js"></script>
+		<script src="test/math/geometry-vectorTest.js"></script>
+		<script src="test/math/graphTest.js"></script>
+		<script src="test/Test.js"></script>
+		<script src="test/TestRunner.js"></script>
