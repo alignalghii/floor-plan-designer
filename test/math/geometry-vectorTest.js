@@ -1,6 +1,9 @@
-function GeometryVectorTest() {}
+function GeometryVectorTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-GeometryVectorTest.prototype.run = function() {return this.testFromTo() && this.testScalarProduct() && this.testVectorLength() && this.testSignedRotAngleOfVectors() && this.testAngleOfVectors() && this.testDet() && this.testDomainToSvgFactory() && this.testSvgToDomainFactory();}
+GeometryVectorTest.prototype = Object.create(Test.prototype);
+
+GeometryVectorTest.prototype.constructor = GeometryVectorTest;
+
 
 
 GeometryVectorTest.prototype.testFromTo = function() {return vecEq(fromTo([3, 7], [5, 12]), [2, 5]);}

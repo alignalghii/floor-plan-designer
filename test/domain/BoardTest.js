@@ -3,9 +3,11 @@
  * @TODO: either the pure functional (FP) way, or the pure procedural (in-place) way, but not this mixed style
  *******************************/
 
-function BoardTest() {}
+function BoardTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-BoardTest.prototype.run = function() {return this.testEmptyBoard() && this.testAddFigure() && this.testDeleteFigure() && this.testUpdateFigure() && this.testAppendLoadFrom() && this.testCollidesAny() && this.testFigureId() && this.testFigureNum();}
+BoardTest.prototype = Object.create(Test.prototype);
+
+BoardTest.prototype.constructor = BoardTest;
 
 
 BoardTest.prototype.testEmptyBoard = function() {return vecEq(new Board(), {next_id: 'fig_1', figures: [], focus_id: null});}

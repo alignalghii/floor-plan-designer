@@ -1,7 +1,7 @@
-function TestSuite(OK = 0, all = 0)
+function TestSuite(grOK = 0, grAll = 0)
 {
-	this.all = all;
-	this.OK  = OK;
+	this.grAll = grAll;
+	this.grOK  = grOK;
 }
 
 TestSuite.prototype.run = function ()
@@ -20,9 +20,9 @@ TestSuite.prototype.run = function ()
 	var svgLowLevelTest     = new SvgLowLevelTest();
 
 	var groupings = [
-				{id: 'result_math', flag: geometryPolygonTest.run() && geometryTest.run() && geometryVectorTest.run() && dataHashTest.run() && dataListTest.run() && graphTest.run()},
-				{id: 'result_domain', flag: graphTest.run() && boardTest.run() && figureTest.run()   },
-				{id: 'result_low' , flag: svgLowLevelTest.run()                                    }
+				{id: 'result_math',   flag: geometryPolygonTest.run() && geometryTest.run() && geometryVectorTest.run() && dataHashTest.run() && dataListTest.run() && graphTest.run()},
+				{id: 'result_domain', flag: boardTest.run() && figureTest.run()   },
+				{id: 'result_low' ,   flag: svgLowLevelTest.run()                 }
 	];
 
 	for (var i = 0; i < groupings.length; i++) {
@@ -36,8 +36,8 @@ TestSuite.prototype.run = function ()
 
 TestSuite.prototype.count = function (flag)
 {
-	this.all++;
-	if (flag) this.OK++;
+	if (flag) this.grOK++;
+	this.grAll++;
 }
 
-TestSuite.prototype.report = function () {console.log('' + this.OK + '/' + this.all + '');}
+TestSuite.prototype.report = function () {console.log('' + this.grOK + '/' + this.grAll + '');}

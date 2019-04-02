@@ -2,9 +2,11 @@
  * Geometric transformations (translation, reflection, rotation)
  **************************/
 
-function FigureTest() {}
+function FigureTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-FigureTest.prototype.run = function() {return this.testFigureCollides() && this.testFigureCollidesTowards() && this.testDoTranslation() && this.testTranslation();}
+FigureTest.prototype = Object.create(Test.prototype);
+
+FigureTest.prototype.constructor = FigureTest;
 
 
 FigureTest.prototype.testFigureCollides = function()

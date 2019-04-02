@@ -2,9 +2,11 @@
  * Query the Board: Abstract modeling of events, and enabling acting both on abstract representation with concrete SVG level
  *******************************/
 
-function DataHashTest() {}
+function DataHashTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-DataHashTest.prototype.run = function() {return this.testSelectByMax() && this.testSelectByProp();}
+DataHashTest.prototype = Object.create(Test.prototype);
+
+DataHashTest.prototype.constructor = DataHashTest;
 
 
 DataHashTest.prototype.testSelectByMax = function() // nearness, approaching, sticking

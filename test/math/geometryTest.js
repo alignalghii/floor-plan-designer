@@ -1,6 +1,9 @@
-function GeometryTest() {}
+function GeometryTest(nOK = 0, nAll = 0) {Test.call(nOK, nAll);}
 
-GeometryTest.prototype.run = function() {return this.testAreConvex() && this.testIsConvex() && this.testAngleMod() && this.testLineSide() && this.testEdgeVector() && this.testAreConvexVectors() && this.testAreConcaveVectors();}
+GeometryTest.prototype = Object.create(Test.prototype);
+
+GeometryTest.prototype.constructor = GeometryTest;
+
 
 
 GeometryTest.prototype.testAreConvex = function()

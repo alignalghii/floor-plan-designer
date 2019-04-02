@@ -1,6 +1,8 @@
-function GeometryPolygonTest() {}
+function GeometryPolygonTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-GeometryPolygonTest.prototype.run = function() {return this.testCollides() && this.testCollidesTowards() && this.testAsciiGraphics() && this.testInside_series_convex_ccw() && this.testInside_series_convex_cw() && this.testInside_series_degen_ccw() && this.testInside_series_degen_cw() && this.testInside_series_concave_ccw() && this.testInside_series_concave_cw() && this.testInside_convex_ccw() && this.testInside_convex_cw() && this.testInside_concave_ccw() && this.testInside_concave_cw() && this.testSignedRotAngleSumWhenToured() && this.testAngleSumWhenToured() && this.testAngleTyper_dependent() && this.testAngleTyper() && this.testExecuteTree() && this.testSubsequencerRolled() && this.testSubsequencer() && this.testRollToJoin() && this.testAreConvexDirectedEdges() && this.testAreConcaveDirectedEdges() && this.testAngleOfEdges() && this.testSectionSide();}
+GeometryPolygonTest.prototype = Object.create(Test.prototype);
+
+GeometryPolygonTest.prototype.constructor = GeometryPolygonTest;
 
 
 GeometryPolygonTest.prototype.testCollides = function()

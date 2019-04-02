@@ -1,6 +1,8 @@
-function DataListTest() {}
+function DataListTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-DataListTest.prototype.run = function() {return this.testUncurry() && this.testFoldl() && this.testEq() && this.testVecEq() && this.testIsPrefixOf() && this.testDepth() && this.testSame() && this.testSum() && this.testPointwise() && this.testAnd() && this.testOr();}
+DataListTest.prototype = Object.create(Test.prototype);
+
+DataListTest.prototype.constructor = DataListTest;
 
 
 DataListTest.prototype.testUncurry = function()

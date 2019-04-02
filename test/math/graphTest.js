@@ -1,6 +1,8 @@
-function GraphTest() {}
+function GraphTest(nOK = 0, nAll = 0) {Test.call(this, nOK, nAll);}
 
-GraphTest.prototype.run = function() {return this.testStatistics() && this.testTour() && this.testRoll();}
+GraphTest.prototype = Object.create(Test.prototype);
+
+GraphTest.prototype.constructor = GraphTest;
 
 
 GraphTest.prototype.testStatistics = function()
