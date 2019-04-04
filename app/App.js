@@ -26,4 +26,4 @@ App.prototype.run = function ()
 	this.svgGraphics.render();  // svg gets rendered (canvas only prepared in constructor)
 };
 
-App.prototype.mousemoveHandler = function (event) {this.svgGraphics.assimilateEventPositionOnFocusIfAny(event);}
+App.prototype.mousemoveHandler = function (event) {this.svgGraphics.assimilateEventPositionOnFocusIfAny(event);};
