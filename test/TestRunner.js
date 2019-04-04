@@ -20,7 +20,7 @@ TestRunner.prototype.processGrouping = function (grouping)
 		return modules.reduce(andRun, true);
 	}
 	let flag = runModules(grouping.modules);
-	document.getElementById(grouping.id).innerHTML = flag ? 'OK' : 'Wrong';
+	document.getElementById('result_' + grouping.id).innerHTML = flag ? 'OK' : 'Wrong';
 	this.count(flag);
 }
 

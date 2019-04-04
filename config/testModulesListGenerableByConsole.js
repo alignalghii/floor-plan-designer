@@ -1,8 +1,9 @@
 function testModulesListGenerableByConsole()
 {
 	return [
-		{id: 'result_math',   modules: [GeometryPolygonTest, GeometryTest, GeometryVectorTest, DataHashTest, DataListTest, GraphTest]},
-		{id: 'result_domain', modules: [BoardTest,  FigureTest                                                                      ]},
-		{id: 'result_low' ,   modules: [SvgLowLevelTest                                                                             ]}
+		{id: 'math'            , modules: [GeometryPolygonTest, GeometryTest, GeometryVectorTest, DataHashTest, DataListTest, GraphTest]},
+		{id: 'domain'          , modules: [BoardTest,  FigureTest                                                                      ]},
+		{id: 'low-level-system', modules: [SvgLowLevelTest                                                                             ]},
+		{id: 'DOM-mocked'      , modules: [UniqueIdderTest                                                                             ]}
 	];
 }
